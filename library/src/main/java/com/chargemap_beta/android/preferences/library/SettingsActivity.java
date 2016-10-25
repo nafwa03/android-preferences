@@ -2,6 +2,7 @@ package com.chargemap_beta.android.preferences.library;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     SettingAdapter settingAdapter;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,37 +34,41 @@ public class SettingsActivity extends AppCompatActivity {
 
         List<Setting> settings = getIntent().getParcelableArrayListExtra("settings");
         String title = getIntent().getStringExtra("title");
-        int color = getIntent().getIntExtra("color", 0);
-        int textColor = getIntent().getIntExtra("textColor", 0);
+
+        int primaryColor = getIntent().getIntExtra("primaryColor", 0);
+
+        int accentColor = getIntent().getIntExtra("accentColor", 0);
+
+        int toolbarTextColor = getIntent().getIntExtra("toolbarTextColor", 0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(color);
+        toolbar.setBackgroundColor(primaryColor);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (textColor != 0) {
+        if (toolbarTextColor == 0) {
+            toolbarTextColor = Color.WHITE;
+        }
 
-            // Set toolbar title color
-            toolbar.setTitleTextColor(textColor);
+        // Set toolbar title color
+        toolbar.setTitleTextColor(toolbarTextColor);
 
-            // Set toolbar icon color
-            final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
+        // Set toolbar icon color
+        final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(toolbarTextColor, PorterDuff.Mode.SRC_ATOP);
 
-            for (int i = 0; i < toolbar.getChildCount(); i++) {
-                final View v = toolbar.getChildAt(i);
+        for (int i = 0; i < toolbar.getChildCount(); i++) {
+            final View v = toolbar.getChildAt(i);
 
-                if (v instanceof ImageButton) {
-                    ((ImageButton) v).setColorFilter(colorFilter);
-                }
+            if (v instanceof ImageButton) {
+                ((ImageButton) v).setColorFilter(colorFilter);
             }
-
         }
 
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
 
-        settingAdapter = new SettingAdapter(this);
+        settingAdapter = new SettingAdapter(this, primaryColor, accentColor);
         settingAdapter.setItems(settings);
         recyclerview.setAdapter(settingAdapter);
 

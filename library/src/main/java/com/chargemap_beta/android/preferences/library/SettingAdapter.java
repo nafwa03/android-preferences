@@ -1,6 +1,9 @@
 package com.chargemap_beta.android.preferences.library;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,9 +33,14 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
     private Activity baseActivity;
     private List<Setting> settings = new ArrayList<>();
+    int primaryColor;
 
-    public SettingAdapter(Activity baseActivity) {
+    int accentColor;
+
+    public SettingAdapter(Activity baseActivity, int primaryColor, int accentColor) {
         this.baseActivity = baseActivity;
+        this.primaryColor = primaryColor;
+        this.accentColor = accentColor;
         this.settings = new ArrayList<>();
     }
 
@@ -166,6 +174,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 vh.settingSlider.setProgress(Integer.parseInt(sliderSetting.findValue(baseActivity)));
             }
 
+            vh.settingSlider.setTrackColor(accentColor);
             vh.settingSlider.setMin(sliderSetting.getMinValue());
             vh.settingSlider.setMax(sliderSetting.getMaxValue());
 
@@ -206,10 +215,20 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
             for (int i = 0; i < radioSetting.getRadioSettingItemList().size(); i++) {
 
-                RadioButton radioButton = (RadioButton) LayoutInflater.from(baseActivity.getApplicationContext()).inflate(R.layout.adapter_setting_radiogroup_radio_radiobutton, null, false);
-                radioButton.setId(i);
-                radioButton.setChecked(i == checkedRadioId);
-                vh.radioGroup.addView(radioButton);
+                AppCompatRadioButton rb = new AppCompatRadioButton(baseActivity);
+                rb.setId(i);
+
+                ColorStateList colorStateList = new ColorStateList(
+                        new int[][]{
+                                new int[]{-android.R.attr.state_checked},
+                                new int[]{android.R.attr.state_checked}
+                        },
+                        new int[]{Color.DKGRAY, accentColor}
+                );
+                rb.setSupportButtonTintList(colorStateList);
+
+                rb.setChecked(i == checkedRadioId);
+                vh.radioGroup.addView(rb);
 
                 TextView textView = (TextView) LayoutInflater.from(baseActivity.getApplicationContext()).inflate(R.layout.adapter_setting_radiogroup_radio_label, null, false);
                 textView.setText(((RadioSetting) setting).getRadioSettingItemList().get(i));

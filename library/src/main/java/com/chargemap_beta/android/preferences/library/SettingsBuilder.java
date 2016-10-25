@@ -16,19 +16,26 @@ public class SettingsBuilder {
 
     private String title;
 
-    private int color;
+    private int primaryColor;
 
-    private int textColor;
+    private int accentColor;
+
+    private int toolbarTextColor;
 
     private Activity activity;
 
-    public SettingsBuilder setToolbarColor(int color) {
-        this.color = ContextCompat.getColor(activity, color);
+    public SettingsBuilder setPrimaryColor(int color) {
+        this.primaryColor = ContextCompat.getColor(activity, color);
+        return this;
+    }
+
+    public SettingsBuilder setAccentColor(int textColor) {
+        this.accentColor = ContextCompat.getColor(activity, textColor);
         return this;
     }
 
     public SettingsBuilder setToolbarTextColor(int textColor) {
-        this.textColor = ContextCompat.getColor(activity, textColor);
+        this.toolbarTextColor = ContextCompat.getColor(activity, textColor);
         return this;
     }
 
@@ -52,8 +59,9 @@ public class SettingsBuilder {
 
         i.putParcelableArrayListExtra("settings", (ArrayList<? extends Parcelable>) settings);
         i.putExtra("title", title);
-        i.putExtra("color", color);
-        i.putExtra("textColor", textColor);
+        i.putExtra("primaryColor", primaryColor);
+        i.putExtra("accentColor", accentColor);
+        i.putExtra("toolbarTextColor", toolbarTextColor);
 
         activity.startActivity(i);
     }

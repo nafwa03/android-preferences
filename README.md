@@ -2,10 +2,10 @@
 
 Android-BottomBar is a simple library developed to provide a nice bottom bar following Google material design guidelines.
 
-[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/v/ChargeMap/android-bottomBar.svg)
+[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/v/ChargeMap/android-preferences.svg)
 
 ---
-![](https://github.com/ChargeMap/android-bottomBar/blob/master/art/demo.gif)
+![](https://github.com/ChargeMap/android-preferences/blob/master/art/demo.png)
 
 ## Gradle Dependency
 
@@ -29,71 +29,95 @@ Add this to your specific module `build.gradle` file:
 ```gradle
 dependencies {
 	...
-	compile 'com.github.ChargeMap:android-bottomBar:1.0'
+	compile 'com.github.ChargeMap:android-preferences:1.0'
 }
 ```
 
 ## Initialisation
 
-### 1 -  Add the view to your XML
-
-
-```xml
-    <com.chargemap_beta.android.bottombar.library.BottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true" />
-```
-
-### 2 -  Customise its behavior
+### 1 -  Create your setting list
 
 
 ```java
-    bottomBar.setColors(
-    	R.color.colorPrimary, // Color used for the active tab text
-    	R.color.md_grey_500 // Color used for the inactive tabs text
-    ); 
+    final ArrayList<Setting> settings = new ArrayList<>();
+
+        settings.add(new TextSetting()
+                .setLabel("Section 1") // Section title
+                .setTitle("Title")
+                .setSubtitle("Subtitle")
+                .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause)) // Setting icon
+                .setCallback(new SettingCallback() {
+                    @Override
+                    public void onClick(SettingAdapter.VH vh) {
+                    	// Executed when the setting row is clicked
+                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
+                    }
+                })
+        );
+
+        settings.add(((RadioSetting) new RadioSetting()
+                .setTitle("Distance unit")
+                .setIconDrawable(ContextCompat.getDrawable(getApplicationContext(), android.R.drawable.ic_media_pause))
+                .setCallback(new SettingCallback() {
+                    @Override
+                    public void onClick(SettingAdapter.VH vh) {
+                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
+                    }
+                }))
+                .setRadioSettingItemList(new ArrayList<String>() {{
+                    add("Meters");
+                    add("Miles");
+                }})
+                .setDefaultRadioPosition(0)
+        );
+
+        settings.add(((SliderSetting) new SliderSetting()
+                .setLabel("Section 2")
+                .setTitle("Title")
+                .setSubtitle("Subtitle")
+                .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
+                .setCallback(new SettingCallback() {
+                    @Override
+                    public void onClick(SettingAdapter.VH vh) {
+                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
+                    }
+                }))
+                .setMinValue(3)
+                .setMaxValue(18)
+                .setDefaultValue(12)
+        );
+
+        settings.add(((CheckBoxSetting) new CheckBoxSetting()
+                .setTitle("Title")
+                .setSubtitle("Subtitle")
+                .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_delete))
+                .setCallback(new SettingCallback() {
+                    @Override
+                    public void onClick(SettingAdapter.VH vh) {
+                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
+                    }
+                }))
+                .setChecked(true)
+        );
 ```
 
-### 3 -  Add the tabs
+### 2 - Start the setting activity
+
 
 ```java
-    ArrayList<BottombarItem> items = new ArrayList<BottombarItem>(){{
-            add(new BottombarItem()
-                    .setId(0) // Caution - Needs to be unique
-                    .setTitle("Charge") // Specify tab title
-                    .setActiveIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_check_dark)) // Active icon drawable
-                    .setActiveIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_check_dark_disabled)) // Inactive icon drawable
-                    .setClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                        	// Place your code to run when the tab is getting active
-                            Toast.makeText(getContext(), "Item 1", Toast.LENGTH_LONG).show();
-                        }
-                    })
-            );
-
-            add(new BottombarItem()
-                    .setId(1)
-                    .setTitle("Map")
-                    .setActiveIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_check_dark))
-                    .setActiveIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_check_dark_disabled))
-                    .setClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(getContext(), "Item 2", Toast.LENGTH_LONG).show();
-                        }
-                    })
-            );
-        }};
+    new SettingsBuilder()
+                        .fromActivity(MainActivity.this) // Pass your current activity
+                        .setSettings(settings) // Your setting list
+                        .setPrimaryColor(R.color.colorPrimary) // Your primary color
+                        .setAccentColor(R.color.colorAccent) // Your accent color
+                        .setToolbarTextColor(R.color.md_white_1000) // The color for the toolbar text and icons
+                        .setTitle("Settings custom") // The toolbar text
+                        .start(); // Start the activity
 ```
 
-### 4 -  Set the bar items
+### 3 - That's it 
 
-```java
-   	bottomBar.setItems(items);
-```
+There is only two step for you to start your custom settings activity.
 
 ## ChargeMap ( [http://chargemap.com](https://chargemap.com) )
 

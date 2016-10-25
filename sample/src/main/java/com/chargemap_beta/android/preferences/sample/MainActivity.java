@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         settings.add(((CheckBoxSetting) new CheckBoxSetting()
                 .setTitle("Title")
                 .setSubtitle("Subtitle")
-                .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
+                .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_delete))
                 .setCallback(new SettingCallback() {
                     @Override
                     public void onClick(SettingAdapter.VH vh) {
@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 new SettingsBuilder()
                         .fromActivity(MainActivity.this)
                         .setSettings(settings)
-                        .setToolbarColor(R.color.colorPrimary)
+                        .setPrimaryColor(R.color.colorPrimary)
+                        .setAccentColor(R.color.colorAccent)
                         .setToolbarTextColor(R.color.md_white_1000)
                         .setTitle("Settings custom")
                         .start();
