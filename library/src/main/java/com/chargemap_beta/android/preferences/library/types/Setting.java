@@ -16,6 +16,8 @@ import com.chargemap_beta.android.preferences.library.callbacks.SettingCallback;
 
 public abstract class Setting implements Parcelable {
 
+    private String UNIQUE_KEY = "CHARGEMAP_PREFERENCES_";
+
     private String label;
 
     private Bitmap icon;
@@ -65,13 +67,13 @@ public abstract class Setting implements Parcelable {
     public void saveValue(Activity activity, String value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(getTitle(), value);
+        editor.putString(UNIQUE_KEY + getTitle(), value);
         editor.apply();
     }
 
     public String findValue(Activity activity) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        return preferences.getString(getTitle(), "null");
+        return preferences.getString(UNIQUE_KEY + getTitle(), "null");
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

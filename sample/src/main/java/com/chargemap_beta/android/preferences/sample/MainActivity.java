@@ -10,7 +10,10 @@ import android.widget.Toast;
 import com.chargemap_beta.android.preferences.library.SettingAdapter;
 import com.chargemap_beta.android.preferences.library.SettingsBuilder;
 import com.chargemap_beta.android.preferences.library.callbacks.SettingCallback;
+import com.chargemap_beta.android.preferences.library.types.CheckBoxSetting;
+import com.chargemap_beta.android.preferences.library.types.RadioSetting;
 import com.chargemap_beta.android.preferences.library.types.Setting;
+import com.chargemap_beta.android.preferences.library.types.SliderSetting;
 import com.chargemap_beta.android.preferences.library.types.TextSetting;
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         final ArrayList<Setting> settings = new ArrayList<>();
 
         settings.add(new TextSetting()
-                .setLabel("Global preferences")
+                .setLabel("Section 1")
                 .setTitle("Title")
                 .setSubtitle("Subtitle")
                 .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
@@ -36,6 +39,53 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
+
+        settings.add(((RadioSetting) new RadioSetting()
+                .setTitle("Distance unit")
+                .setIconDrawable(ContextCompat.getDrawable(getApplicationContext(), android.R.drawable.ic_media_pause))
+                .setCallback(new SettingCallback() {
+                    @Override
+                    public void onClick(SettingAdapter.VH vh) {
+                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
+                    }
+                }))
+                .setRadioSettingItemList(new ArrayList<String>() {{
+                    add("Meters");
+                    add("Miles");
+                }})
+                .setDefaultRadioPosition(0)
+        );
+
+        settings.add(((SliderSetting) new SliderSetting()
+                .setLabel("Section 2")
+                .setTitle("Title")
+                .setSubtitle("Subtitle")
+                .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
+                .setCallback(new SettingCallback() {
+                    @Override
+                    public void onClick(SettingAdapter.VH vh) {
+                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
+                    }
+                }))
+                .setMinValue(3)
+                .setMaxValue(18)
+                .setDefaultValue(12)
+        );
+
+        settings.add(((CheckBoxSetting) new CheckBoxSetting()
+                .setTitle("Title")
+                .setSubtitle("Subtitle")
+                .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
+                .setCallback(new SettingCallback() {
+                    @Override
+                    public void onClick(SettingAdapter.VH vh) {
+                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
+                    }
+                }))
+                .setChecked(true)
+        );
+
+
 
         Button btn = (Button) findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -51,24 +101,6 @@ public class MainActivity extends AppCompatActivity {
                         .start();
             }
         });
-
-        /*settings.add(((RadioSetting) new RadioSetting()
-                .setLabel("Global preferences")
-                .setTitle("Distance unit")
-                .setIcon(ContextCompat.getDrawable(getApplicationContext(), android.R.drawable.ic_media_pause))
-                .setCallback(new SettingCallback() {
-                    @Override
-                    public void onClick(SettingAdapter.VH vh) {
-                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
-                    }
-                }))
-                .setRadioSettingItemList(new ArrayList<RadioSettingItem>() {{
-                    add(new RadioSettingItem("Meters"));
-                    add(new RadioSettingItem("Miles"));
-                }})
-                .setDefaultRadioPosition(0)
-        );*/
-
 
     }
 }

@@ -1,7 +1,6 @@
 package com.chargemap_beta.android.preferences.library;
 
 import android.app.Activity;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +70,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         return 0;
     }
 
-    public void setItems(List<Setting> settingList){
+    public void setItems(List<Setting> settingList) {
         settings = settingList;
     }
 
@@ -80,7 +79,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         final Setting setting = settings.get(position);
 
-        if(setting.getIcon() != null){
+        if (setting.getIcon() != null) {
             vh.icon.setImageBitmap(setting.getIcon());
         }
 
@@ -108,7 +107,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         if (vh.subtitle != null) {
             if (setting.getSubtitle() == null) {
                 vh.subtitle.setVisibility(View.GONE);
-            }else{
+            } else {
                 vh.subtitle.setText(setting.getSubtitle());
             }
         }
@@ -183,7 +182,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
                 @Override
                 public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
-                    setting.getCallback().onClick(vh);
+                    if (setting.getCallback() != null) {
+                        setting.getCallback().onClick(vh);
+                    }
                     setting.saveValue(baseActivity, "" + seekBar.getProgress());
                 }
             });
@@ -263,14 +264,14 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         public VH(View v) {
             super(v);
 
-            icon = (ImageView) v.findViewById(R.id.adapterSettingItem_imageView_icon) ;
-            subtitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_subtitle) ;
-            settingCheckbox = (CheckBox) v.findViewById(R.id.adapterSettingCheckboxItem_checkBox) ;
-            radioGroup = (RadioGroup) v.findViewById(R.id.adapterSettingRadioItem_radioGroup) ;
-            settingTitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_title) ;
-            settingSlider = (DiscreteSeekBar) v.findViewById(R.id.adapterSettingSliderItem_rangeBar_slider) ;
-            title = (TextView) v.findViewById(R.id.adapterSettingItem_textView_label) ;
-            radioRow = (LinearLayout) v.findViewById(R.id.adapterSettingRadioItem_linearLayout_labelContainer) ;
+            icon = (ImageView) v.findViewById(R.id.adapterSettingItem_imageView_icon);
+            subtitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_subtitle);
+            settingCheckbox = (CheckBox) v.findViewById(R.id.adapterSettingCheckboxItem_checkBox);
+            radioGroup = (RadioGroup) v.findViewById(R.id.adapterSettingRadioItem_radioGroup);
+            settingTitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_title);
+            settingSlider = (DiscreteSeekBar) v.findViewById(R.id.adapterSettingSliderItem_rangeBar_slider);
+            title = (TextView) v.findViewById(R.id.adapterSettingItem_textView_label);
+            radioRow = (LinearLayout) v.findViewById(R.id.adapterSettingRadioItem_linearLayout_labelContainer);
 
             v.setOnClickListener(this);
         }

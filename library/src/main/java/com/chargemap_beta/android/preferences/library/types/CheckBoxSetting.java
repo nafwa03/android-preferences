@@ -20,6 +20,7 @@ public class CheckBoxSetting extends Setting {
             return new CheckBoxSetting[size];
         }
     };
+
     private Boolean isChecked;
 
     public CheckBoxSetting() {
