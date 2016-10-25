@@ -5,7 +5,8 @@ Android-BottomBar is a simple library developed to provide a nice bottom bar fol
 [![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/v/ChargeMap/android-preferences.svg)
 
 ---
-![](https://github.com/ChargeMap/android-preferences/blob/master/art/demo.png)
+
+<img src="https://github.com/ChargeMap/android-preferences/blob/master/art/demo.png" alt="Demo" style="width: 200px;"/>
 
 ## Gradle Dependency
 
