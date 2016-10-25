@@ -3,14 +3,14 @@ package com.chargemap_beta.android.preferences.library;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 
 import com.chargemap_beta.android.preferences.library.types.Setting;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingsBuilder{
+public class SettingsBuilder {
 
     private List<Setting> settings;
 
@@ -21,7 +21,7 @@ public class SettingsBuilder{
     private Activity activity;
 
     public SettingsBuilder setToolbarColor(int color) {
-        this.color = color;
+        this.color = ContextCompat.getColor(activity, color);
         return this;
     }
 
@@ -35,7 +35,7 @@ public class SettingsBuilder{
         return this;
     }
 
-    public SettingsBuilder fromActivity(Activity activity){
+    public SettingsBuilder fromActivity(Activity activity) {
         this.activity = activity;
         return this;
     }
