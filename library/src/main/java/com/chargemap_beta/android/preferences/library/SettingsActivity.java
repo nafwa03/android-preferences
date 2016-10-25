@@ -2,12 +2,16 @@ package com.chargemap_beta.android.preferences.library;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.chargemap_beta.android.preferences.library.types.Setting;
 
@@ -28,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
         List<Setting> settings = getIntent().getParcelableArrayListExtra("settings");
         String title = getIntent().getStringExtra("title");
         int color = getIntent().getIntExtra("color", 0);
+        int textColor = getIntent().getIntExtra("textColor", 0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(color);
@@ -35,6 +40,24 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (textColor != 0) {
+
+            // Set toolbar title color
+            toolbar.setTitleTextColor(textColor);
+
+            // Set toolbar icon color
+            final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
+
+            for (int i = 0; i < toolbar.getChildCount(); i++) {
+                final View v = toolbar.getChildAt(i);
+
+                if (v instanceof ImageButton) {
+                    ((ImageButton) v).setColorFilter(colorFilter);
+                }
+            }
+
+        }
 
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
 

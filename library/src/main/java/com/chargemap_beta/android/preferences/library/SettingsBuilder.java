@@ -18,10 +18,17 @@ public class SettingsBuilder {
 
     private int color;
 
+    private int textColor;
+
     private Activity activity;
 
     public SettingsBuilder setToolbarColor(int color) {
         this.color = ContextCompat.getColor(activity, color);
+        return this;
+    }
+
+    public SettingsBuilder setToolbarTextColor(int textColor) {
+        this.textColor = ContextCompat.getColor(activity, textColor);
         return this;
     }
 
@@ -46,6 +53,7 @@ public class SettingsBuilder {
         i.putParcelableArrayListExtra("settings", (ArrayList<? extends Parcelable>) settings);
         i.putExtra("title", title);
         i.putExtra("color", color);
+        i.putExtra("textColor", textColor);
 
         activity.startActivity(i);
     }

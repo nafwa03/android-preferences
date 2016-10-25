@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         .fromActivity(MainActivity.this)
                         .setSettings(settings)
                         .setToolbarColor(R.color.colorPrimary)
+                        .setToolbarTextColor(R.color.md_white_1000)
                         .setTitle("Settings custom")
                         .start();
             }
