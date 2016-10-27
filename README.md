@@ -30,7 +30,7 @@ Add this to your specific module `build.gradle` file:
 ```gradle
 dependencies {
 	...
-	compile 'com.github.ChargeMap:android-preferences:1.3'
+	compile 'com.github.ChargeMap:android-preferences:1.6'
 }
 ```
 
