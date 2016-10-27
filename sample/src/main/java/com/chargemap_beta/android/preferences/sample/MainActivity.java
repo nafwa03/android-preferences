@@ -31,11 +31,9 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("Title")
                 .setSubtitle("Subtitle")
                 .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
-
         );
 
         List<String> stringList = new ArrayList<>();
-
         stringList.add("Meters");
         stringList.add("Miles");
 

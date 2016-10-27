@@ -30,7 +30,7 @@ Add this to your specific module `build.gradle` file:
 ```gradle
 dependencies {
 	...
-	compile 'com.github.ChargeMap:android-preferences:1.1'
+	compile 'com.github.ChargeMap:android-preferences:1.2'
 }
 ```
 
@@ -38,66 +38,52 @@ dependencies {
 
 ### 1 -  Create your setting list
 
-
 ```java
     final ArrayList<Setting> settings = new ArrayList<>();
-
+    
+    	// Add a simple text setting
         settings.add(new TextSetting()
+                .setContext(context)
                 .setLabel("Section 1") // Section title
                 .setTitle("Title")
                 .setSubtitle("Subtitle")
                 .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause)) // Setting icon
-                .setCallback(new SettingCallback() {
-                    @Override
-                    public void onClick(SettingAdapter.VH vh) {
-                    	// Executed when the setting row is clicked
-                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
-                    }
-                })
         );
+        
+        // Add a setting with radio buttons
+        List<String> options = new ArrayList<>();
+        stringList.add("Meters");
+        stringList.add("Miles");
 
         settings.add(((RadioSetting) new RadioSetting()
+                .setContext(context)
                 .setTitle("Distance unit")
                 .setIconDrawable(ContextCompat.getDrawable(getApplicationContext(), android.R.drawable.ic_media_pause))
-                .setCallback(new SettingCallback() {
-                    @Override
-                    public void onClick(SettingAdapter.VH vh) {
-                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
-                    }
-                }))
-                .setRadioSettingItemList(new ArrayList<String>() {{
-                    add("Meters");
-                    add("Miles");
-                }})
+                )
+                .setRadioSettingItemList(options)
                 .setDefaultRadioPosition(0)
         );
 
+		// Add slider setting
         settings.add(((SliderSetting) new SliderSetting()
+                .setContext(context)
                 .setLabel("Section 2")
                 .setTitle("Title")
                 .setSubtitle("Subtitle")
                 .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
-                .setCallback(new SettingCallback() {
-                    @Override
-                    public void onClick(SettingAdapter.VH vh) {
-                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
-                    }
-                }))
+            	)
                 .setMinValue(3)
                 .setMaxValue(18)
                 .setDefaultValue(12)
         );
 
+		// Add checkbox setting
         settings.add(((CheckBoxSetting) new CheckBoxSetting()
+                .setContext(context)
                 .setTitle("Title")
                 .setSubtitle("Subtitle")
                 .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_delete))
-                .setCallback(new SettingCallback() {
-                    @Override
-                    public void onClick(SettingAdapter.VH vh) {
-                        Toast.makeText(getApplicationContext(), "Item clicked", Toast.LENGTH_LONG).show();
-                    }
-                }))
+            	)
                 .setChecked(true)
         );
 ```
