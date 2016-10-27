@@ -2,7 +2,7 @@
 
 Android-BottomBar is a simple library developed to provide a nice bottom bar following Google material design guidelines.
 
-[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/v/ChargeMap/android-preferences.svg)
+[![Release](https://jitpack.io/v/ChargeMap/android-preferences.svg)](https://jitpack.io/v/ChargeMap/android-preferences.svg)
 
 ---
 
@@ -30,7 +30,7 @@ Add this to your specific module `build.gradle` file:
 ```gradle
 dependencies {
 	...
-	compile 'com.github.ChargeMap:android-preferences:1.0'
+	compile 'com.github.ChargeMap:android-preferences:1.1'
 }
 ```
 
