@@ -3,6 +3,7 @@ package com.chargemap_beta.android.preferences.library;
 import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,11 +13,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.chargemap_beta.android.preferences.library.callbacks.ClickListener;
+import com.chargemap_beta.android.preferences.library.callbacks.SettingClickListener;
 import com.chargemap_beta.android.preferences.library.types.CheckBoxSetting;
 import com.chargemap_beta.android.preferences.library.types.RadioSetting;
 import com.chargemap_beta.android.preferences.library.types.Setting;
@@ -87,8 +87,10 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         final Setting setting = settings.get(position);
 
+        setting.setContext(baseActivity);
+
         if (setting.getIcon() != null) {
-            vh.icon.setImageBitmap(setting.getIcon());
+            vh.icon.setImageURI(Uri.parse(setting.getIcon()));
         }
 
         /*if(setting.getIconFile() != null){
@@ -122,30 +124,24 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         if (settings.get(position) instanceof TextSetting) {
 
-            vh.clickListener = new ClickListener() {
-                @Override
-                public void onClick(View v, int position, boolean isLongClick) {
-
-                }
-            };
 
         } else if (settings.get(position) instanceof CheckBoxSetting) {
 
             final CheckBoxSetting checkBoxSetting = (CheckBoxSetting) setting;
 
-            if (checkBoxSetting.findValue(baseActivity) != null) {
+            if (checkBoxSetting.findValue() != null) {
                 // No preference found
 
                 vh.settingCheckbox.setChecked(checkBoxSetting.getChecked());
             } else {
                 // we found a preference so we check the checkbox if needed
 
-                vh.settingCheckbox.setChecked(Boolean.parseBoolean(checkBoxSetting.findValue(baseActivity)));
+                vh.settingCheckbox.setChecked(Boolean.parseBoolean(checkBoxSetting.findValue()));
             }
 
-            vh.clickListener = new ClickListener() {
+            vh.settingClickListener = new SettingClickListener() {
                 @Override
-                public void onClick(View v, int position, boolean isLongClick) {
+                public void onClick(int position) {
                     vh.settingCheckbox.setChecked(!vh.settingCheckbox.isChecked());
                 }
             };
@@ -153,11 +149,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             vh.settingCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (checkBoxSetting.getCallback() != null) {
-                        checkBoxSetting.getCallback().onClick(vh);
-                    }
-
-                    setting.saveValue(baseActivity, b ? "true" : "false");
+                    setting.saveValue(b ? "true" : "false");
                 }
             });
 
@@ -165,13 +157,13 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
             SliderSetting sliderSetting = (SliderSetting) setting;
 
-            if (sliderSetting.findValue(baseActivity) != null) {
+            if (sliderSetting.findValue() != null) {
                 // No preference found
                 vh.settingSlider.setProgress(sliderSetting.getDefaultValue());
 
             } else {
                 // We found a preference so we adjust the slider
-                vh.settingSlider.setProgress(Integer.parseInt(sliderSetting.findValue(baseActivity)));
+                vh.settingSlider.setProgress(Integer.parseInt(sliderSetting.findValue()));
             }
 
             vh.settingSlider.setTrackColor(accentColor);
@@ -191,10 +183,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
                 @Override
                 public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
-                    if (setting.getCallback() != null) {
-                        setting.getCallback().onClick(vh);
-                    }
-                    setting.saveValue(baseActivity, "" + seekBar.getProgress());
+                    setting.saveValue("" + seekBar.getProgress());
                 }
             });
 
@@ -204,13 +193,13 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
             int checkedRadioId;
 
-            if (radioSetting.findValue(baseActivity) != null) {
+            if (radioSetting.findValue() != null) {
                 // No preference found
                 checkedRadioId = radioSetting.getDefaultRadioPosition();
 
             } else {
                 // We found a preference so we check the radio
-                checkedRadioId = Integer.parseInt(radioSetting.findValue(baseActivity));
+                checkedRadioId = Integer.parseInt(radioSetting.findValue());
             }
 
             for (int i = 0; i < radioSetting.getRadioSettingItemList().size(); i++) {
@@ -235,23 +224,14 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 vh.radioRow.addView(textView);
             }
 
-            radioSetting.saveValue(baseActivity, "" + checkedRadioId);
+            radioSetting.saveValue("" + checkedRadioId);
 
             vh.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                    setting.saveValue(baseActivity, "" + i);
+                    setting.saveValue("" + i);
                 }
             });
-
-            vh.clickListener = new ClickListener() {
-                @Override
-                public void onClick(View v, int position, boolean isLongClick) {
-                    if (setting.getCallback() != null) {
-                        setting.getCallback().onClick(vh);
-                    }
-                }
-            };
         }
     }
 
@@ -278,7 +258,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         LinearLayout radioRow;
 
-        ClickListener clickListener;
+        SettingClickListener settingClickListener;
 
         public VH(View v) {
             super(v);
@@ -297,8 +277,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         @Override
         public void onClick(View v) {
-            if (clickListener != null) {
-                clickListener.onClick(v, getAdapterPosition(), false);
+            if (settingClickListener != null) {
+                settingClickListener.onClick(getAdapterPosition());
             }
         }
     }

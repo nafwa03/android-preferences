@@ -1,41 +1,40 @@
 package com.chargemap_beta.android.preferences.library;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 
 import com.chargemap_beta.android.preferences.library.types.Setting;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-public class SettingsBuilder {
+public class SettingsBuilder implements Serializable {
 
-    private List<Setting> settings;
+    public List<Setting> settings;
 
-    private String title;
+    public String title;
 
-    private int primaryColor;
+    public int primaryColor;
 
-    private int accentColor;
+    public int accentColor;
 
-    private int toolbarTextColor;
+    public int toolbarTextColor;
 
-    private Activity activity;
+    private transient Context context;
 
     public SettingsBuilder setPrimaryColor(int color) {
-        this.primaryColor = ContextCompat.getColor(activity, color);
+        this.primaryColor = ContextCompat.getColor(context, color);
         return this;
     }
 
     public SettingsBuilder setAccentColor(int textColor) {
-        this.accentColor = ContextCompat.getColor(activity, textColor);
+        this.accentColor = ContextCompat.getColor(context, textColor);
         return this;
     }
 
     public SettingsBuilder setToolbarTextColor(int textColor) {
-        this.toolbarTextColor = ContextCompat.getColor(activity, textColor);
+        this.toolbarTextColor = ContextCompat.getColor(context, textColor);
         return this;
     }
 
@@ -49,20 +48,17 @@ public class SettingsBuilder {
         return this;
     }
 
-    public SettingsBuilder fromActivity(Activity activity) {
-        this.activity = activity;
+    public SettingsBuilder fromActivity(Context context) {
+        this.context = context;
         return this;
     }
 
     public void start() {
-        Intent i = new Intent(activity, SettingsActivity.class);
 
-        i.putParcelableArrayListExtra("settings", (ArrayList<? extends Parcelable>) settings);
-        i.putExtra("title", title);
-        i.putExtra("primaryColor", primaryColor);
-        i.putExtra("accentColor", accentColor);
-        i.putExtra("toolbarTextColor", toolbarTextColor);
+        Intent intent = new Intent(context, SettingsActivity.class);
 
-        activity.startActivity(i);
+        intent.putExtra("data", this);
+
+        context.startActivity(intent);
     }
 }

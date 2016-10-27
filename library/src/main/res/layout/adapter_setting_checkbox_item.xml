@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/adapterSettingItem_textView_label">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/adapterSettingItem_imageView_icon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

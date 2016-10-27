@@ -31,4 +31,5 @@ dependencies {
     compile "com.android.support:design:${support}"
 
     compile "org.adw.library:discrete-seekbar:1.0.1" // Seekbar
+    compile 'com.facebook.fresco:fresco:0.14.1' // fresco
 }

@@ -1,7 +1,5 @@
 package com.chargemap_beta.android.preferences.library;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -15,16 +13,17 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.chargemap_beta.android.preferences.library.types.Setting;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
-import java.util.List;
+import java.io.File;
 
 public class SettingsActivity extends AppCompatActivity {
 
     RecyclerView recyclerview;
 
+    SettingsBuilder builder;
+
     SettingAdapter settingAdapter;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,31 +31,26 @@ public class SettingsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_settings);
 
-        List<Setting> settings = getIntent().getParcelableArrayListExtra("settings");
-        String title = getIntent().getStringExtra("title");
+        Fresco.initialize(this);
 
-        int primaryColor = getIntent().getIntExtra("primaryColor", 0);
-
-        int accentColor = getIntent().getIntExtra("accentColor", 0);
-
-        int toolbarTextColor = getIntent().getIntExtra("toolbarTextColor", 0);
+        builder = (SettingsBuilder) getIntent().getSerializableExtra("data");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(primaryColor);
+        toolbar.setBackgroundColor(builder.primaryColor);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setTitle(builder.title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (toolbarTextColor == 0) {
-            toolbarTextColor = Color.WHITE;
+        if (builder.toolbarTextColor == 0) {
+            builder.toolbarTextColor = Color.WHITE;
         }
 
         // Set toolbar title color
-        toolbar.setTitleTextColor(toolbarTextColor);
+        toolbar.setTitleTextColor(builder.toolbarTextColor);
 
         // Set toolbar icon color
-        final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(toolbarTextColor, PorterDuff.Mode.SRC_ATOP);
+        final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(builder.toolbarTextColor, PorterDuff.Mode.SRC_ATOP);
 
         for (int i = 0; i < toolbar.getChildCount(); i++) {
             final View v = toolbar.getChildAt(i);
@@ -68,8 +62,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
 
-        settingAdapter = new SettingAdapter(this, primaryColor, accentColor);
-        settingAdapter.setItems(settings);
+        settingAdapter = new SettingAdapter(this, builder.primaryColor, builder.accentColor);
+        settingAdapter.setItems(builder.settings);
         recyclerview.setAdapter(settingAdapter);
 
         recyclerview.setHasFixedSize(true);
@@ -83,8 +77,12 @@ public class SettingsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK, returnIntent);
+
+                for (Setting setting : builder.settings) {
+                    File file = new File(setting.getIcon());
+                    file.delete();
+                }
+
                 finish();
                 return true;
 
