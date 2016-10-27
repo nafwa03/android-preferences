@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +91,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         setting.setContext(baseActivity);
 
         if (setting.getIcon() != null) {
-            vh.icon.setImageURI(Uri.parse(setting.getIcon()));
+            Log.d("PARSE" , setting.getIcon());
+            Log.d("PARSE" , Uri.parse("file://" + setting.getIcon()).toString());
+            vh.icon.setImageURI(Uri.parse("file://" + setting.getIcon()));
         }
 
         /*if(setting.getIconFile() != null){

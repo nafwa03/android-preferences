@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -88,7 +89,7 @@ public abstract class Setting implements Serializable {
     }
 
     public Setting setIconDrawable(Drawable iconDrawable) {
-        setIcon(UNIQUE_KEY + getTitle());
+        setIcon(context.getCacheDir() + File.separator + UNIQUE_KEY + getTitle());
 
         Bitmap bitmap = drawableToBitmap(iconDrawable);
 
@@ -120,7 +121,8 @@ public abstract class Setting implements Serializable {
         this.icon = icon;
     }
 
-    public void setContext(Context context) {
+    public Setting setContext(Context context) {
         this.context = context;
+        return this;
     }
 }

@@ -79,8 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
             case android.R.id.home:
 
                 for (Setting setting : builder.settings) {
-                    File file = new File(setting.getIcon());
-                    file.delete();
+                    new File(setting.getIcon()).delete();
                 }
 
                 finish();
@@ -89,5 +88,14 @@ public class SettingsActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        for (Setting setting : builder.settings) {
+            new File(setting.getIcon()).delete();
+        }
+
+        finish();
     }
 }

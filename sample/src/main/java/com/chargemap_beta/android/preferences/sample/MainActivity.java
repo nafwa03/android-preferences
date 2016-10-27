@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         final ArrayList<Setting> settings = new ArrayList<>();
 
         settings.add(new TextSetting()
+                .setContext(this)
                 .setLabel("Section 1")
                 .setTitle("Title")
                 .setSubtitle("Subtitle")
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         stringList.add("Miles");
 
         settings.add(((RadioSetting) new RadioSetting()
+                        .setContext(this)
                         .setTitle("Distance unit")
                         .setIconDrawable(ContextCompat.getDrawable(getApplicationContext(), android.R.drawable.ic_media_pause))
                 )
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
         settings.add(((SliderSetting) new SliderSetting()
+                .setContext(this)
                         .setLabel("Section 2")
                         .setTitle("Title")
                         .setSubtitle("Subtitle")
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
         settings.add(((CheckBoxSetting) new CheckBoxSetting()
+                .setContext(this)
                         .setTitle("Title")
                         .setSubtitle("Subtitle")
                         .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_delete))
