@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                         .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_delete))
                 )
                         .setChecked(true)
-
         );
 
         settingsBuilder = new SettingsBuilder()
