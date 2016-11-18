@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         .setContext(this)
                         .setTitle("Title3")
                         .setSubtitle("Subtitle")
-                        .setIcon("https://api-test.chargemap.com/medias/v2/charging_speeds/icon/original/1/normal.svg")
-                        .setIconIsSVG(true)
+                        .setIcon("http://www.myiconfinder.com/uploads/iconsets/79a6cc671eb7205ea4903436e08851c4-map.png")
                 )
                         .setChecked(true)
         );
