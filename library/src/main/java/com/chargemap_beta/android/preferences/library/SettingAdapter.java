@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -173,6 +174,43 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             vh.settingSlider.setMin(sliderSetting.getMinValue());
             vh.settingSlider.setMax(sliderSetting.getMaxValue());
 
+            vh.settingSliderValues.setWeightSum(6);
+
+            LinearLayout.LayoutParams leftParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            leftParams.weight = 1;
+            leftParams.gravity = Gravity.LEFT;
+
+            LinearLayout.LayoutParams centerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            centerParams.weight = 1;
+            centerParams.gravity = Gravity.CENTER;
+
+            LinearLayout.LayoutParams rightParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            rightParams.weight = 1;
+            rightParams.gravity = Gravity.RIGHT;
+
+            if(sliderSetting.getValueNumber() == 0){
+                vh.settingSliderValues.setVisibility(View.GONE);
+            }else{
+                int delta = sliderSetting.getMaxValue() / sliderSetting.getValueNumber();
+
+                for(int i = 0; i <= sliderSetting.getValueNumber(); i ++){
+                    TextView value = new TextView(vh.settingSliderValues.getContext());
+
+                    if(i == 0){
+                        value.setText("" + sliderSetting.getMinValue());
+                        value.setLayoutParams(leftParams);
+                    }else if(i == sliderSetting.getValueNumber()){
+                        value.setText("" + sliderSetting.getMaxValue());
+                        value.setLayoutParams(rightParams);
+                    }else{
+                        value.setText("" + (delta * i));
+                        value.setLayoutParams(centerParams);
+                    }
+
+                    vh.settingSliderValues.addView(value);
+                }
+            }
+
             vh.settingSlider.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
                 @Override
                 public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
@@ -257,6 +295,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         DiscreteSeekBar settingSlider;
 
+        LinearLayout settingSliderValues;
+
         TextView title;
 
         LinearLayout radioRow;
@@ -272,6 +312,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             radioGroup = (RadioGroup) v.findViewById(R.id.adapterSettingRadioItem_radioGroup);
             settingTitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_title);
             settingSlider = (DiscreteSeekBar) v.findViewById(R.id.adapterSettingSliderItem_rangeBar_slider);
+            settingSliderValues = (LinearLayout) v.findViewById(R.id.adapterSettingSliderItem_linearLayout_values);
             title = (TextView) v.findViewById(R.id.adapterSettingItem_textView_label);
             radioRow = (LinearLayout) v.findViewById(R.id.adapterSettingRadioItem_linearLayout_labelContainer);
 

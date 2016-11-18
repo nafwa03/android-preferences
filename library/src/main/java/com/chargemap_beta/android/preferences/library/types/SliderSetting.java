@@ -5,6 +5,7 @@ public class SliderSetting extends Setting {
     private int defaultValue;
     private int minValue;
     private int maxValue;
+    private int valueNumber;
 
     public int getMinValue() {
         return minValue;
@@ -30,6 +31,15 @@ public class SliderSetting extends Setting {
 
     public Setting setDefaultValue(int defaultValue) {
         this.defaultValue = defaultValue;
+        return this;
+    }
+
+    public int getValueNumber() {
+        return valueNumber;
+    }
+
+    public SliderSetting setValueNumber(int valueNumber) {
+        this.valueNumber = valueNumber;
         return this;
     }
 }

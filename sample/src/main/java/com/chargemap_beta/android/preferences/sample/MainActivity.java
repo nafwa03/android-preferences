@@ -57,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
                         .setSubtitle("Subtitle")
                         .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
                 )
-                        .setMinValue(3)
-                        .setMaxValue(18)
+                        .setMinValue(1)
+                        .setMaxValue(50)
+                        .setValueNumber(6)
                         .setDefaultValue(12)
 
         );
