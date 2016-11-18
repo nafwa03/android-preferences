@@ -73,6 +73,7 @@ public class RecyclerActivity extends AppCompatActivity {
         new SettingsBuilder()
                 .fromActivity(RecyclerActivity.this)
                 .setSettings(settings)
+                .setAccentColor(R.color.colorAccent)
                 .setupRecyclerView((RecyclerView) findViewById(R.id.recyclerview));
     }
 }

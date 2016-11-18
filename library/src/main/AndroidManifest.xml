@@ -9,8 +9,7 @@
         android:label="@string/app_name">
 
         <activity
-            android:name=".SettingsActivity"
-            android:theme="@style/AndroidPreferences" />
+            android:name=".SettingsActivity"/>
 
     </application>
 

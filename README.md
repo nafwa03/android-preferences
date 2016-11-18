@@ -25,12 +25,15 @@ allprojects {
 
 ### Dependency
 
+[![Release](https://jitpack.io/v/ChargeMap/android-preferences.svg)](https://jitpack.io/v/ChargeMap/android-preferences.svg)
+
 Add this to your specific module `build.gradle` file:
 
 ```gradle
 dependencies {
 	...
-	compile 'com.github.ChargeMap:android-preferences:1.6'
+	compile 'com.github.ChargeMap:android-preferences:LAST_RELEASE'
+	// See the badge to get the current release version number
 }
 ```
 
@@ -88,8 +91,9 @@ dependencies {
         );
 ```
 
-### 2 - Start the setting activity
+### 2 - Start using the lib
 
+#### Using provided activity
 
 ```java
     new SettingsBuilder()
@@ -100,6 +104,30 @@ dependencies {
                         .setToolbarTextColor(R.color.md_white_1000) // The color for the toolbar text and icons
                         .setTitle("Settings custom") // The toolbar text
                         .start(); // Start the activity
+```
+
+#### Using provided fragment
+
+```java
+    Fragment fragment = new SettingsBuilder()
+                        .fromActivity(MainActivity.this) // Pass your current activity
+                        .setSettings(settings) // Your setting list
+                        .setAccentColor(R.color.colorAccent) // Your accent color
+                        .getFragment(); // Returns the fragment
+                        
+    // Do what you want with your fragment
+```
+
+#### Using your own recyclerview
+
+```java
+    new SettingsBuilder()
+                        .fromActivity(MainActivity.this) // Pass your current activity
+                        .setSettings(settings) // Your setting list
+                        .setAccentColor(R.color.colorAccent) // Your accent color
+                        .setupRecyclerView(myRecyclerView); // Use your recyclerview to display the list
+                        
+    // You list is now populated with your settings 
 ```
 
 ### 3 - That's it 
