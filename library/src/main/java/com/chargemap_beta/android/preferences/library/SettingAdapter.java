@@ -3,21 +3,19 @@ package com.chargemap_beta.android.preferences.library;
 import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.chargemap_beta.android.pictureLoader.library.PictureView;
 import com.chargemap_beta.android.preferences.library.callbacks.SettingClickListener;
 import com.chargemap_beta.android.preferences.library.types.CheckBoxSetting;
 import com.chargemap_beta.android.preferences.library.types.RadioSetting;
@@ -27,6 +25,7 @@ import com.chargemap_beta.android.preferences.library.types.TextSetting;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,19 +90,13 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         setting.setContext(baseActivity);
 
-        if (setting.getIcon() != null) {
-            Log.d("PARSE", setting.getIcon());
-            Log.d("PARSE", Uri.parse("file://" + setting.getIcon()).toString());
-            vh.icon.setImageURI(Uri.parse("file://" + setting.getIcon()));
+        if (setting.getIconIsSVG()) {
+            vh.icon.loadSVG(setting.getIcon());
+        } else if (setting.getIconIsDrawable()) {
+            vh.icon.load(new File(setting.getIcon()));
+        } else {
+            vh.icon.load(setting.getIcon());
         }
-
-        /*if(setting.getIconFile() != null){
-            vh.icon.setImageDrawable(ContextCompat.getDrawable(baseActivity, setting.getIconRes()));
-        }
-
-        if(setting.getIconURL() != null){
-            vh.icon.setImageDrawable(ContextCompat.getDrawable(baseActivity, setting.getIconRes()));
-        }*/
 
         if (vh.title != null) {
             vh.title.setText(setting.getLabel());
@@ -188,21 +181,21 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             rightParams.weight = 1;
             rightParams.gravity = Gravity.RIGHT;
 
-            if(sliderSetting.getValueNumber() == 0){
+            if (sliderSetting.getValueNumber() == 0) {
                 vh.settingSliderValues.setVisibility(View.GONE);
-            }else{
+            } else {
                 int delta = sliderSetting.getMaxValue() / sliderSetting.getValueNumber();
 
-                for(int i = 0; i <= sliderSetting.getValueNumber(); i ++){
+                for (int i = 0; i <= sliderSetting.getValueNumber(); i++) {
                     TextView value = new TextView(vh.settingSliderValues.getContext());
 
-                    if(i == 0){
+                    if (i == 0) {
                         value.setText("" + sliderSetting.getMinValue());
                         value.setLayoutParams(leftParams);
-                    }else if(i == sliderSetting.getValueNumber()){
+                    } else if (i == sliderSetting.getValueNumber()) {
                         value.setText("" + sliderSetting.getMaxValue());
                         value.setLayoutParams(rightParams);
-                    }else{
+                    } else {
                         value.setText("" + (delta * i));
                         value.setLayoutParams(centerParams);
                     }
@@ -283,7 +276,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
     public static class VH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        ImageView icon;
+        PictureView icon;
 
         TextView subtitle;
 
@@ -306,7 +299,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         public VH(View v) {
             super(v);
 
-            icon = (ImageView) v.findViewById(R.id.adapterSettingItem_imageView_icon);
+            icon = (PictureView) v.findViewById(R.id.adapterSettingItem_imageView_icon);
             subtitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_subtitle);
             settingCheckbox = (CheckBox) v.findViewById(R.id.adapterSettingCheckboxItem_checkBox);
             radioGroup = (RadioGroup) v.findViewById(R.id.adapterSettingRadioItem_radioGroup);

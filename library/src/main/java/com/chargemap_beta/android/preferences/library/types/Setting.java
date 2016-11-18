@@ -21,6 +21,10 @@ public abstract class Setting implements Serializable {
 
     private String icon;
 
+    private Boolean iconIsSVG = false;
+
+    private Boolean iconIsDrawable = false;
+
     private String title;
 
     private String subtitle;
@@ -89,6 +93,8 @@ public abstract class Setting implements Serializable {
     }
 
     public Setting setIconDrawable(Drawable iconDrawable) {
+        iconIsDrawable = true;
+
         setIcon(context.getCacheDir() + File.separator + UNIQUE_KEY + getTitle());
 
         Bitmap bitmap = drawableToBitmap(iconDrawable);
@@ -117,12 +123,31 @@ public abstract class Setting implements Serializable {
         return icon;
     }
 
-    private void setIcon(String icon) {
+    public Setting setIcon(String icon) {
         this.icon = icon;
+        return this;
     }
 
     public Setting setContext(Context context) {
         this.context = context;
+        return this;
+    }
+
+    public Boolean getIconIsSVG() {
+        return iconIsSVG;
+    }
+
+    public Setting setIconIsSVG(Boolean iconIsSVG) {
+        this.iconIsSVG = iconIsSVG;
+        return this;
+    }
+
+    public Boolean getIconIsDrawable() {
+        return iconIsDrawable;
+    }
+
+    public Setting setIconIsDrawable(Boolean iconIsDrawable) {
+        this.iconIsDrawable = iconIsDrawable;
         return this;
     }
 }
