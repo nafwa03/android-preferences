@@ -2,6 +2,7 @@ package com.chargemap_beta.android.preferences.library;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,5 +74,9 @@ public class SettingsBuilder implements Serializable {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new DividerDecoration(activity, DividerDecoration.VERTICAL_LIST));
+    }
+
+    public Fragment getFragment() {
+        return SettingFragment.newInstance(this);
     }
 }

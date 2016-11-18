@@ -19,6 +19,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    SettingsBuilder settingsBuilder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
         settings.add(((SliderSetting) new SliderSetting()
-                .setContext(this)
+                        .setContext(this)
                         .setLabel("Section 2")
                         .setTitle("Title")
                         .setSubtitle("Subtitle")
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
         settings.add(((CheckBoxSetting) new CheckBoxSetting()
-                .setContext(this)
+                        .setContext(this)
                         .setTitle("Title")
                         .setSubtitle("Subtitle")
                         .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_delete))
@@ -71,19 +73,19 @@ public class MainActivity extends AppCompatActivity {
 
         );
 
+        settingsBuilder = new SettingsBuilder()
+                .fromActivity(MainActivity.this)
+                .setSettings(settings)
+                .setPrimaryColor(R.color.colorPrimary)
+                .setAccentColor(R.color.colorAccent)
+                .setToolbarTextColor(R.color.md_white_1000)
+                .setTitle("Settings custom");
+
         Button btn_activity = ((Button) findViewById(R.id.btn_activity));
         btn_activity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                new SettingsBuilder()
-                        .fromActivity(MainActivity.this)
-                        .setSettings(settings)
-                        .setPrimaryColor(R.color.colorPrimary)
-                        .setAccentColor(R.color.colorAccent)
-                        .setToolbarTextColor(R.color.md_white_1000)
-                        .setTitle("Settings custom")
-                        .start();
+                settingsBuilder.start();
             }
         });
 
@@ -91,10 +93,14 @@ public class MainActivity extends AppCompatActivity {
         btn_recyclerview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 startActivity(new Intent(MainActivity.this, RecyclerActivity.class));
             }
         });
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, settingsBuilder.getFragment(), "SETTINGFRAGMENT")
+                .disallowAddToBackStack()
+                .commit();
     }
 }

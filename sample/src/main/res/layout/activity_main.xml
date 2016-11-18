@@ -4,20 +4,23 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-
     <Button
         android:id="@+id/btn_activity"
         android:text="START SETTINGS ACTIVITY"
+        android:layout_margin="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="64dp"/>
-
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btn_recyclerview"
+        android:layout_margin="16dp"
         android:text="START RECYCLERVIEW ACTIVITY"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="64dp"/>
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
