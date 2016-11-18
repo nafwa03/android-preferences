@@ -1,11 +1,9 @@
 package com.chargemap_beta.android.preferences.sample;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.widget.RecyclerView;
 
 import com.chargemap_beta.android.preferences.library.SettingsBuilder;
 import com.chargemap_beta.android.preferences.library.types.CheckBoxSetting;
@@ -17,12 +15,12 @@ import com.chargemap_beta.android.preferences.library.types.TextSetting;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class RecyclerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_recyclerview);
 
         final ArrayList<Setting> settings = new ArrayList<>();
 
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 .setLabel("Section 1")
                 .setTitle("Title")
                 .setSubtitle("Subtitle")
-                .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
+                .setIconDrawable(ContextCompat.getDrawable(RecyclerActivity.this, android.R.drawable.ic_media_pause))
         );
 
         List<String> stringList = new ArrayList<>();
@@ -49,11 +47,11 @@ public class MainActivity extends AppCompatActivity {
         );
 
         settings.add(((SliderSetting) new SliderSetting()
-                .setContext(this)
+                        .setContext(this)
                         .setLabel("Section 2")
                         .setTitle("Title")
                         .setSubtitle("Subtitle")
-                        .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_media_pause))
+                        .setIconDrawable(ContextCompat.getDrawable(RecyclerActivity.this, android.R.drawable.ic_media_pause))
                 )
                         .setMinValue(3)
                         .setMaxValue(18)
@@ -62,39 +60,19 @@ public class MainActivity extends AppCompatActivity {
         );
 
         settings.add(((CheckBoxSetting) new CheckBoxSetting()
-                .setContext(this)
+                        .setContext(this)
                         .setTitle("Title")
                         .setSubtitle("Subtitle")
-                        .setIconDrawable(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.ic_delete))
+                        .setIconDrawable(ContextCompat.getDrawable(RecyclerActivity.this, android.R.drawable.ic_delete))
                 )
                         .setChecked(true)
 
         );
 
-        Button btn_activity = ((Button) findViewById(R.id.btn_activity));
-        btn_activity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                new SettingsBuilder()
-                        .fromActivity(MainActivity.this)
-                        .setSettings(settings)
-                        .setPrimaryColor(R.color.colorPrimary)
-                        .setAccentColor(R.color.colorAccent)
-                        .setToolbarTextColor(R.color.md_white_1000)
-                        .setTitle("Settings custom")
-                        .start();
-            }
-        });
-
-        Button btn_recyclerview = (Button) findViewById(R.id.btn_recyclerview);
-        btn_recyclerview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(MainActivity.this, RecyclerActivity.class));
-            }
-        });
-
+        new SettingsBuilder()
+                .fromActivity(RecyclerActivity.this)
+                .setSettings(settings)
+                .setupRecyclerView((RecyclerView) findViewById(R.id.recyclerview));
     }
 }

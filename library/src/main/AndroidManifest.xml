@@ -10,9 +10,7 @@
 
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/AndroidPreferences">
-
-        </activity>
+            android:theme="@style/AndroidPreferences" />
 
     </application>
 

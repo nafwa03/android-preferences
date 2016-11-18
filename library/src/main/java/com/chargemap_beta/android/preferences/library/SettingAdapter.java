@@ -91,8 +91,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         setting.setContext(baseActivity);
 
         if (setting.getIcon() != null) {
-            Log.d("PARSE" , setting.getIcon());
-            Log.d("PARSE" , Uri.parse("file://" + setting.getIcon()).toString());
+            Log.d("PARSE", setting.getIcon());
+            Log.d("PARSE", Uri.parse("file://" + setting.getIcon()).toString());
             vh.icon.setImageURI(Uri.parse("file://" + setting.getIcon()));
         }
 

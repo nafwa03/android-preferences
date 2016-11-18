@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.chargemap_beta.android.preferences.library.types.Setting;
-import com.facebook.drawee.backends.pipeline.Fresco;
 
 import java.io.File;
 
@@ -30,8 +29,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_settings);
-
-        Fresco.initialize(this);
 
         builder = (SettingsBuilder) getIntent().getSerializableExtra("data");
 
