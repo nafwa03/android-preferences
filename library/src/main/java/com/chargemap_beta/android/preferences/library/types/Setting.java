@@ -17,6 +17,8 @@ public abstract class Setting implements Serializable {
 
     public static String UNIQUE_KEY = "CHARGEMAP_PREFERENCES_";
 
+    private String UUID;
+
     private String label;
 
     private String icon;
@@ -152,27 +154,41 @@ public abstract class Setting implements Serializable {
         return this;
     }
 
-    public void reset(){
+    public void reset() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(getKey());
         editor.apply();
-    };
+    }
+
+    ;
 
     public String getKey() {
 
-        if(getTitle() == null || getTitle().length() > 0){
+        if (getUUID() != null && getTitle().length() > 0) {
             return UNIQUE_KEY + getTitle();
         }
 
-        if(getSubtitle() == null || getSubtitle().length() > 0){
+        if (getTitle() != null && getTitle().length() > 0) {
+            return UNIQUE_KEY + getTitle();
+        }
+
+        if (getSubtitle() != null && getSubtitle().length() > 0) {
             return UNIQUE_KEY + getSubtitle();
         }
 
-        if(getLabel() == null || getLabel().length() > 0){
+        if (getLabel() != null && getLabel().length() > 0) {
             return UNIQUE_KEY + getLabel();
         }
 
         return key;
+    }
+
+    public String getUUID() {
+        return UUID;
+    }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 }
