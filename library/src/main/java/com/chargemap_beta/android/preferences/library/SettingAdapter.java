@@ -272,16 +272,22 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
             ToggleSetting toggleSetting = (ToggleSetting) setting;
 
-            if(toggleSetting.getActiveBackgroundColor() != 0) vh.toggle.setActiveBackgroundColor(toggleSetting.getActiveBackgroundColor());
-            if(toggleSetting.getInactiveBackgroundColor() != 0) vh.toggle.setInactiveBackgroundColor(toggleSetting.getInactiveBackgroundColor());
-            if(toggleSetting.getActiveTextColor() != 0) vh.toggle.setActiveTextColor(toggleSetting.getActiveTextColor());
-            if(toggleSetting.getInactiveTextColor() != 0) vh.toggle.setInactiveTextColor(toggleSetting.getInactiveTextColor());
+            if (toggleSetting.getActiveBackgroundColor() != 0)
+                vh.toggle.setActiveBackgroundColor(toggleSetting.getActiveBackgroundColor());
+            if (toggleSetting.getInactiveBackgroundColor() != 0)
+                vh.toggle.setInactiveBackgroundColor(toggleSetting.getInactiveBackgroundColor());
+            if (toggleSetting.getActiveTextColor() != 0)
+                vh.toggle.setActiveTextColor(toggleSetting.getActiveTextColor());
+            if (toggleSetting.getInactiveTextColor() != 0)
+                vh.toggle.setInactiveTextColor(toggleSetting.getInactiveTextColor());
 
-            if(toggleSetting.getPadding() != 0) vh.toggle.setPadding(toggleSetting.getPadding());
-            if(toggleSetting.getRadius() != 0) vh.toggle.setRadius(toggleSetting.getRadius());
+            if (toggleSetting.getPadding() != 0) vh.toggle.setPadding(toggleSetting.getPadding());
+            if (toggleSetting.getRadius() != 0) vh.toggle.setRadius(toggleSetting.getRadius());
 
-            if(toggleSetting.getBorderColor() != 0) vh.toggle.setBorderColor(toggleSetting.getBorderColor());
+            if (toggleSetting.getBorderColor() != 0)
+                vh.toggle.setBorderColor(toggleSetting.getBorderColor());
 
+            vh.toggle.items = new ArrayList<>();
             vh.toggle.setItems(toggleSetting.getRadioSettingItemList());
 
             if (toggleSetting.findValue() == null || toggleSetting.findValue().equals("null")) {
