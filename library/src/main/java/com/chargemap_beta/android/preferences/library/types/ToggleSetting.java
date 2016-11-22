@@ -105,7 +105,8 @@ public class ToggleSetting extends Setting {
         return borderColor;
     }
 
-    public void setBorderColor(int borderColor) {
+    public ToggleSetting setBorderColor(int borderColor) {
         this.borderColor = borderColor;
+        return this;
     }
 }
