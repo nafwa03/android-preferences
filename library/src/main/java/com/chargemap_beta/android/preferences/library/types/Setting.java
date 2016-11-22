@@ -161,15 +161,15 @@ public abstract class Setting implements Serializable {
 
     public String getKey() {
 
-        if(getTitle().length() > 0){
+        if(getTitle() == null || getTitle().length() > 0){
             return UNIQUE_KEY + getTitle();
         }
 
-        if(getSubtitle().length() > 0){
+        if(getSubtitle() == null || getSubtitle().length() > 0){
             return UNIQUE_KEY + getSubtitle();
         }
 
-        if(getLabel().length() > 0){
+        if(getLabel() == null || getLabel().length() > 0){
             return UNIQUE_KEY + getLabel();
         }
 
