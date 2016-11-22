@@ -18,7 +18,15 @@ public class ToggleSetting extends Setting {
     private int borderColor;
 
     public ToggleSetting() {
+        activeBackgroundColor = 0;
+        inactiveBackgroundColor = 0;
+        activeTextColor = 0;
+        inactiveTextColor = 0;
 
+        borderColor = 0;
+
+        padding = 0;
+        radius = 0;
     }
 
     public int getDefaultRadioPosition() {
