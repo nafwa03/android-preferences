@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.chargemap_beta.android.preferences.library.SettingAdapter;
 import com.chargemap_beta.android.preferences.library.SettingsBuilder;
 import com.chargemap_beta.android.preferences.library.types.CheckBoxSetting;
 import com.chargemap_beta.android.preferences.library.types.RadioSetting;
@@ -51,7 +53,7 @@ public class RecyclerActivity extends AppCompatActivity {
                         .setLabel("Section 2")
                         .setTitle("Title")
                         .setSubtitle("Subtitle")
-                        .setIconDrawable(ContextCompat.getDrawable(RecyclerActivity.this, android.R.drawable.ic_media_pause))
+                        .setIcon("http://www.myiconfinder.com/uploads/iconsets/79a6cc671eb7205ea4903436e08851c4-map.png")
                 )
                         .setMinValue(3)
                         .setMaxValue(18)
@@ -66,14 +68,26 @@ public class RecyclerActivity extends AppCompatActivity {
                         .setIconDrawable(ContextCompat.getDrawable(RecyclerActivity.this, android.R.drawable.ic_delete))
                 )
                         .setChecked(true)
-
         );
-
 
         new SettingsBuilder()
                 .fromActivity(RecyclerActivity.this)
                 .setSettings(settings)
                 .setAccentColor(R.color.colorAccent)
                 .setupRecyclerView((RecyclerView) findViewById(R.id.recyclerview));
+
+        findViewById(R.id.refreshButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SettingAdapter settingAdapter = (SettingAdapter) ((RecyclerView) findViewById(R.id.recyclerview)).getAdapter();
+
+                for (int i = 0; i < settings.size(); i++) {
+                    settings.get(i).reset();
+                }
+
+                settingAdapter.setItems(settings);
+                settingAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

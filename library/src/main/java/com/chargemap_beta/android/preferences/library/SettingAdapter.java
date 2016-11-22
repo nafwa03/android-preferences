@@ -241,6 +241,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 checkedRadioId = Integer.parseInt(radioSetting.findValue());
             }
 
+            vh.radioGroup.removeAllViews();
+            vh.radioRow.removeAllViews();
+
             for (int i = 0; i < radioSetting.getRadioSettingItemList().size(); i++) {
 
                 AppCompatRadioButton rb = new AppCompatRadioButton(baseActivity);

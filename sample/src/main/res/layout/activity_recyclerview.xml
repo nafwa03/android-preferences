@@ -7,6 +7,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
         android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/refreshButton"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="Refresh"/>
 
 </RelativeLayout>
