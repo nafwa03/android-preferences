@@ -91,7 +91,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         setting.setContext(baseActivity);
 
         if (setting.getIconIsSVG()) {
-            vh.icon.loadSVG(setting.getIcon());
+            if (vh.icon.getDrawable() == null) {
+                vh.icon.loadSVG(setting.getIcon());
+            }
         } else if (setting.getIconIsDrawable()) {
             vh.icon.load(new File(setting.getIcon()));
         } else {
