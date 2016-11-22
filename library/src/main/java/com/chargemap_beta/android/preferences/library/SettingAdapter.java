@@ -126,7 +126,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
             final CheckBoxSetting checkBoxSetting = (CheckBoxSetting) setting;
 
-            if (checkBoxSetting.findValue() != null) {
+            if (checkBoxSetting.findValue() == null || checkBoxSetting.findValue().equals("null")) {
                 // No preference found
 
                 vh.settingCheckbox.setChecked(checkBoxSetting.getChecked());
@@ -154,7 +154,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
             SliderSetting sliderSetting = (SliderSetting) setting;
 
-            if (sliderSetting.findValue() != null) {
+            if (sliderSetting.findValue() == null || sliderSetting.findValue().equals("null")) {
                 // No preference found
                 vh.settingSlider.setProgress(sliderSetting.getDefaultValue());
 
@@ -227,7 +227,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
             int checkedRadioId;
 
-            if (radioSetting.findValue() != null) {
+            if (radioSetting.findValue() == null || radioSetting.findValue().equals("null")) {
                 // No preference found
                 checkedRadioId = radioSetting.getDefaultRadioPosition();
 
