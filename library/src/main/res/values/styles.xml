@@ -7,4 +7,19 @@
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
     </style>
 
+    <style name="SwitchButton">
+        <item name="kswThumbDrawable">@drawable/switch_thumb</item>
+        <item name="kswBackColor">@color/switch_material_back</item>
+    </style>
+
+    <style name="SwitchButton.Material" parent="SwitchButton">
+        <item name="kswBackMeasureRatio">1.45</item>
+        <item name="kswThumbMarginLeft">-16dp</item>
+        <item name="kswThumbMarginTop">-14dp</item>
+        <item name="kswThumbMarginRight">-16dp</item>
+        <item name="kswThumbMarginBottom">-14dp</item>
+        <item name="kswThumbWidth">42dp</item>
+        <item name="kswThumbHeight">42dp</item>
+    </style>
+
 </resources>

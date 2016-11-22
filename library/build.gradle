@@ -32,4 +32,6 @@ dependencies {
 
     compile "org.adw.library:discrete-seekbar:1.0.1" // Seekbar
     compile 'com.github.ChargeMap:android-pictureLoader:1.1'
+
+    compile "com.kyleduo.switchbutton:library:1.4.4" // Toggle
 }

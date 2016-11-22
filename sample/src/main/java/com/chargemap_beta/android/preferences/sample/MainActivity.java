@@ -12,6 +12,7 @@ import com.chargemap_beta.android.preferences.library.types.CheckBoxSetting;
 import com.chargemap_beta.android.preferences.library.types.RadioSetting;
 import com.chargemap_beta.android.preferences.library.types.Setting;
 import com.chargemap_beta.android.preferences.library.types.SliderSetting;
+import com.chargemap_beta.android.preferences.library.types.SwitchSetting;
 import com.chargemap_beta.android.preferences.library.types.TextSetting;
 
 import java.util.ArrayList;
@@ -67,6 +68,24 @@ public class MainActivity extends AppCompatActivity {
         settings.add(((CheckBoxSetting) new CheckBoxSetting()
                         .setContext(this)
                         .setTitle("Title3")
+                        .setSubtitle("Subtitle")
+                        .setIcon("http://www.myiconfinder.com/uploads/iconsets/79a6cc671eb7205ea4903436e08851c4-map.png")
+                )
+                        .setChecked(true)
+        );
+
+        settings.add(((SwitchSetting) new SwitchSetting()
+                        .setContext(this)
+                        .setTitle("Title4")
+                        .setSubtitle("Subtitle")
+                        .setIcon("http://www.myiconfinder.com/uploads/iconsets/79a6cc671eb7205ea4903436e08851c4-map.png")
+                )
+                        .setChecked(false)
+        );
+
+        settings.add(((SwitchSetting) new SwitchSetting()
+                        .setContext(this)
+                        .setTitle("Title5")
                         .setSubtitle("Subtitle")
                         .setIcon("http://www.myiconfinder.com/uploads/iconsets/79a6cc671eb7205ea4903436e08851c4-map.png")
                 )

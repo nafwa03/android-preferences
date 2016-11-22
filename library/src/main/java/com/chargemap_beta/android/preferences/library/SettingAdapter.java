@@ -21,7 +21,9 @@ import com.chargemap_beta.android.preferences.library.types.CheckBoxSetting;
 import com.chargemap_beta.android.preferences.library.types.RadioSetting;
 import com.chargemap_beta.android.preferences.library.types.Setting;
 import com.chargemap_beta.android.preferences.library.types.SliderSetting;
+import com.chargemap_beta.android.preferences.library.types.SwitchSetting;
 import com.chargemap_beta.android.preferences.library.types.TextSetting;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -59,6 +61,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 return new VH(inflater.inflate(R.layout.adapter_setting_slider_item, viewGroup, false));
             case 4:
                 return new VH(inflater.inflate(R.layout.adapter_setting_radio_item, viewGroup, false));
+            case 5:
+                return new VH(inflater.inflate(R.layout.adapter_setting_switch_item, viewGroup, false));
         }
         return null;
     }
@@ -74,6 +78,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             return 3;
         } else if (settings.get(position) instanceof RadioSetting) {
             return 4;
+        } else if (settings.get(position) instanceof SwitchSetting) {
+            return 5;
         }
 
         return 0;
@@ -146,6 +152,34 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             };
 
             vh.settingCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    setting.saveValue(b ? "true" : "false");
+                }
+            });
+
+        } else if (settings.get(position) instanceof SwitchSetting) {
+
+            final SwitchSetting switchSetting = (SwitchSetting) setting;
+
+            if (switchSetting.findValue() == null || switchSetting.findValue().equals("null")) {
+                // No preference found
+
+                vh.switchButton.setCheckedImmediately(switchSetting.getChecked());
+            } else {
+                // we found a preference so we check the checkbox if needed
+
+                vh.switchButton.setCheckedImmediately(Boolean.parseBoolean(switchSetting.findValue()));
+            }
+
+            vh.settingClickListener = new SettingClickListener() {
+                @Override
+                public void onClick(int position) {
+                    vh.switchButton.toggleImmediately();
+                }
+            };
+
+            vh.switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     setting.saveValue(b ? "true" : "false");
@@ -296,6 +330,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         DiscreteSeekBar settingSlider;
 
+        SwitchButton switchButton;
+
         LinearLayout settingSliderValues;
 
         TextView title;
@@ -313,6 +349,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             radioGroup = (RadioGroup) v.findViewById(R.id.adapterSettingRadioItem_radioGroup);
             settingTitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_title);
             settingSlider = (DiscreteSeekBar) v.findViewById(R.id.adapterSettingSliderItem_rangeBar_slider);
+            switchButton = (SwitchButton) v.findViewById(R.id.switchButton);
             settingSliderValues = (LinearLayout) v.findViewById(R.id.adapterSettingSliderItem_linearLayout_values);
             title = (TextView) v.findViewById(R.id.adapterSettingItem_textView_label);
             radioRow = (LinearLayout) v.findViewById(R.id.adapterSettingRadioItem_linearLayout_labelContainer);
