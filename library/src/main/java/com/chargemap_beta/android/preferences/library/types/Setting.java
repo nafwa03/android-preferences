@@ -30,6 +30,7 @@ public abstract class Setting implements Serializable {
     private String subtitle;
 
     private transient Context context;
+    private String key;
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap;
@@ -83,13 +84,13 @@ public abstract class Setting implements Serializable {
     public void saveValue(String value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(UNIQUE_KEY + getTitle(), value);
+        editor.putString(getKey(), value);
         editor.apply();
     }
 
     public String findValue() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(UNIQUE_KEY + getTitle(), "null");
+        return preferences.getString(getKey(), "null");
     }
 
     public Setting setIconDrawable(Drawable iconDrawable) {
@@ -154,7 +155,24 @@ public abstract class Setting implements Serializable {
     public void reset(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(UNIQUE_KEY + getTitle());
+        editor.remove(getKey());
         editor.apply();
     };
+
+    public String getKey() {
+
+        if(getTitle().length() > 0){
+            return UNIQUE_KEY + getTitle();
+        }
+
+        if(getSubtitle().length() > 0){
+            return UNIQUE_KEY + getSubtitle();
+        }
+
+        if(getLabel().length() > 0){
+            return UNIQUE_KEY + getLabel();
+        }
+
+        return key;
+    }
 }
