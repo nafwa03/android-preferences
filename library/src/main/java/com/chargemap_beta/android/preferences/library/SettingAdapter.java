@@ -104,7 +104,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             vh.icon.load(setting.getIcon());
         }
 
-        if (vh.title != null) {
+        if (vh.title != null && vh.title.getText().length() == 0) {
             vh.title.setText(setting.getLabel());
             if (setting.getLabel() == null) {
                 vh.title.setVisibility(View.GONE);
