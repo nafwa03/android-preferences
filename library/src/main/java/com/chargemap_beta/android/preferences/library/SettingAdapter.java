@@ -287,9 +287,6 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             if (toggleSetting.getBorderColor() != 0)
                 vh.toggle.setBorderColor(toggleSetting.getBorderColor());
 
-            vh.toggle.items = new ArrayList<>();
-            vh.toggle.setItems(toggleSetting.getRadioSettingItemList());
-
             if (toggleSetting.findValue() == null || toggleSetting.findValue().equals("null")) {
                 // No preference found
                 vh.toggle.setSelectedToggle(toggleSetting.getDefaultRadioPosition());
@@ -299,6 +296,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 // We found a preference so we adjust the slider
                 vh.toggle.setSelectedToggle(Integer.parseInt(toggleSetting.findValue()));
             }
+
+            vh.toggle.items = new ArrayList<>();
+            vh.toggle.setItems(toggleSetting.getRadioSettingItemList());
 
             vh.toggle.setListener(new MultiToggleClickListener() {
                 @Override

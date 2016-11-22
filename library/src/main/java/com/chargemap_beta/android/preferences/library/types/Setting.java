@@ -7,11 +7,13 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 public abstract class Setting implements Serializable {
 
@@ -84,6 +86,9 @@ public abstract class Setting implements Serializable {
     }
 
     public void saveValue(String value) {
+        if(this instanceof ToggleSetting){
+            Log.e("PREFERENCES", "Save -> " + value);
+        }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(getKey(), value);
@@ -92,7 +97,11 @@ public abstract class Setting implements Serializable {
 
     public String findValue() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(getKey(), "null");
+        String value = preferences.getString(getKey(), "null");
+        if(this instanceof ToggleSetting) {
+            Log.e("PREFERENCES", "Find -> " + value);
+        }
+        return value;
     }
 
     public Setting setIconDrawable(Drawable iconDrawable) {
@@ -160,8 +169,6 @@ public abstract class Setting implements Serializable {
         editor.remove(getKey());
         editor.apply();
     }
-
-    ;
 
     public String getKey() {
 

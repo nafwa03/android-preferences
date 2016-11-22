@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> stringList = new ArrayList<>();
         stringList.add("Meters");
         stringList.add("Miles");
+        stringList.add("UnitSample");
 
         settings.add(((RadioSetting) new RadioSetting()
                         .setContext(this)
@@ -96,13 +97,13 @@ public class MainActivity extends AppCompatActivity {
         settings.add(((ToggleSetting) new ToggleSetting()
                         .setContext(this)
                         .setLabel("Toggle")
-                        .setTitle("Title2")
+                        .setTitle("Title6")
                         .setSubtitle("Subtitle")
                 )
                         .setRadioSettingItemList(stringList)
                         .setDefaultRadioPosition(0)
                         .setActiveBackgroundColor(R.color.md_blue_800)
-                .setRadius(120)
+                        .setRadius(120)
         );
 
         settingsBuilder = new SettingsBuilder()
