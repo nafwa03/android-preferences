@@ -65,7 +65,7 @@ public class SettingsBuilder implements Serializable {
         activity.startActivity(intent);
     }
 
-    public void setupRecyclerView(RecyclerView recyclerView) {
+    public SettingAdapter setupRecyclerView(RecyclerView recyclerView) {
         SettingAdapter settingAdapter = new SettingAdapter(activity, primaryColor, accentColor);
         settingAdapter.setItems(settings);
 
@@ -74,6 +74,8 @@ public class SettingsBuilder implements Serializable {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new DividerDecoration(activity, DividerDecoration.VERTICAL_LIST));
+
+        return settingAdapter;
     }
 
     public Fragment getFragment() {
