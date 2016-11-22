@@ -150,4 +150,11 @@ public abstract class Setting implements Serializable {
         this.iconIsDrawable = iconIsDrawable;
         return this;
     }
+
+    public void reset(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(UNIQUE_KEY + getTitle());
+        editor.apply();
+    };
 }
