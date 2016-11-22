@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.chargemap_beta.android.multiToggle.library.MultiToggle;
+import com.chargemap_beta.android.multiToggle.library.MultiToggleClickListener;
 import com.chargemap_beta.android.pictureLoader.library.PictureView;
 import com.chargemap_beta.android.preferences.library.callbacks.SettingClickListener;
 import com.chargemap_beta.android.preferences.library.types.CheckBoxSetting;
@@ -23,6 +25,7 @@ import com.chargemap_beta.android.preferences.library.types.Setting;
 import com.chargemap_beta.android.preferences.library.types.SliderSetting;
 import com.chargemap_beta.android.preferences.library.types.SwitchSetting;
 import com.chargemap_beta.android.preferences.library.types.TextSetting;
+import com.chargemap_beta.android.preferences.library.types.ToggleSetting;
 import com.kyleduo.switchbutton.SwitchButton;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
@@ -30,7 +33,6 @@ import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
@@ -63,6 +65,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 return new VH(inflater.inflate(R.layout.adapter_setting_radio_item, viewGroup, false));
             case 5:
                 return new VH(inflater.inflate(R.layout.adapter_setting_switch_item, viewGroup, false));
+            case 6:
+                return new VH(inflater.inflate(R.layout.adapter_setting_toggle_item, viewGroup, false));
         }
         return null;
     }
@@ -80,6 +84,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             return 4;
         } else if (settings.get(position) instanceof SwitchSetting) {
             return 5;
+        } else if (settings.get(position) instanceof ToggleSetting) {
+            return 6;
         }
 
         return 0;
@@ -96,12 +102,16 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         setting.setContext(baseActivity);
 
-        if (setting.getIconIsSVG()) {
-            vh.icon.loadSVG(setting.getIcon());
-        } else if (setting.getIconIsDrawable()) {
-            vh.icon.load(new File(setting.getIcon()));
+        if (setting.getIcon() == null || setting.getIcon().equals("null")) {
+            vh.icon.setVisibility(View.GONE);
         } else {
-            vh.icon.load(setting.getIcon());
+            if (setting.getIconIsSVG()) {
+                vh.icon.loadSVG(setting.getIcon());
+            } else if (setting.getIconIsDrawable()) {
+                vh.icon.load(new File(setting.getIcon()));
+            } else {
+                vh.icon.load(setting.getIcon());
+            }
         }
 
         if (vh.title != null && vh.title.getText().length() == 0) {
@@ -258,6 +268,30 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 }
             });
 
+        } else if (settings.get(position) instanceof ToggleSetting) {
+
+            ToggleSetting toggleSetting = (ToggleSetting) setting;
+
+            vh.toggle.setItems(toggleSetting.getRadioSettingItemList());
+
+            if (toggleSetting.findValue() == null || toggleSetting.findValue().equals("null")) {
+                // No preference found
+                vh.toggle.selectedToggle = toggleSetting.getDefaultRadioPosition();
+
+            } else {
+
+                vh.toggle.selectedToggle = Integer.parseInt(toggleSetting.findValue());
+                // We found a preference so we adjust the slider
+                //vh.toggle.setCheckedTogglePosition(Integer.parseInt(toggleSetting.findValue()));
+            }
+
+            vh.toggle.setListener(new MultiToggleClickListener() {
+                @Override
+                public void onClick(int i) {
+                    setting.saveValue("" + i);
+                }
+            });
+
         } else if (settings.get(position) instanceof RadioSetting) {
 
             RadioSetting radioSetting = (RadioSetting) setting;
@@ -328,6 +362,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         DiscreteSeekBar settingSlider;
 
+        MultiToggle toggle;
+
         SwitchButton switchButton;
 
         LinearLayout settingSliderValues;
@@ -348,6 +384,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             settingTitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_title);
             settingSlider = (DiscreteSeekBar) v.findViewById(R.id.adapterSettingSliderItem_rangeBar_slider);
             switchButton = (SwitchButton) v.findViewById(R.id.switchButton);
+            toggle = (MultiToggle) v.findViewById(R.id.toggle);
             settingSliderValues = (LinearLayout) v.findViewById(R.id.adapterSettingSliderItem_linearLayout_values);
             title = (TextView) v.findViewById(R.id.adapterSettingItem_textView_label);
             radioRow = (LinearLayout) v.findViewById(R.id.adapterSettingRadioItem_linearLayout_labelContainer);

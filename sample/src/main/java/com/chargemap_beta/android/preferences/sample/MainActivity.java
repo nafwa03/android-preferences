@@ -14,6 +14,7 @@ import com.chargemap_beta.android.preferences.library.types.Setting;
 import com.chargemap_beta.android.preferences.library.types.SliderSetting;
 import com.chargemap_beta.android.preferences.library.types.SwitchSetting;
 import com.chargemap_beta.android.preferences.library.types.TextSetting;
+import com.chargemap_beta.android.preferences.library.types.ToggleSetting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +91,16 @@ public class MainActivity extends AppCompatActivity {
                         .setIcon("http://www.myiconfinder.com/uploads/iconsets/79a6cc671eb7205ea4903436e08851c4-map.png")
                 )
                         .setChecked(true)
+        );
+
+        settings.add(((ToggleSetting) new ToggleSetting()
+                        .setContext(this)
+                        .setLabel("Toggle")
+                        .setTitle("Title2")
+                        .setSubtitle("Subtitle")
+                )
+                        .setRadioSettingItemList(stringList)
+                        .setDefaultRadioPosition(0)
         );
 
         settingsBuilder = new SettingsBuilder()
