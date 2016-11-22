@@ -184,6 +184,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             if (sliderSetting.getValueNumber() == 0) {
                 vh.settingSliderValues.setVisibility(View.GONE);
             } else {
+
+                vh.settingSliderValues.removeAllViews();
+
                 int delta = sliderSetting.getMaxValue() / sliderSetting.getValueNumber();
 
                 for (int i = 0; i <= sliderSetting.getValueNumber(); i++) {
