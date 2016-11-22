@@ -68,9 +68,7 @@
                 <com.chargemap_beta.android.multiToggle.library.MultiToggle
                     android:id="@+id/toggle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:mt_padding="10"
-                    app:mt_radius="8" />
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
 
