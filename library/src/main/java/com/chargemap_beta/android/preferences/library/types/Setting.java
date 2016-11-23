@@ -36,7 +36,7 @@ public abstract class Setting implements Serializable {
 
     private String subtitle;
 
-    private SettingUpdateListener clickListener;
+    private transient SettingUpdateListener clickListener;
 
     private transient Context context;
 

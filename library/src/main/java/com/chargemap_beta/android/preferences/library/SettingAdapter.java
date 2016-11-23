@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -206,11 +207,10 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         } else if (settings.get(position) instanceof SliderSetting) {
 
-            SliderSetting sliderSetting = (SliderSetting) setting;
+            final SliderSetting sliderSetting = (SliderSetting) setting;
 
             if (sliderSetting.findValue() == null || sliderSetting.findValue().equals("null")) {
                 // No preference found
-                vh.settingSlider.setProgress(sliderSetting.getDefaultValue());
                 vh.settingSlider.setProgress(sliderSetting.getDefaultValue());
 
             } else {
@@ -222,44 +222,49 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             vh.settingSlider.setMin(sliderSetting.getMinValue());
             vh.settingSlider.setMax(sliderSetting.getMaxValue());
 
-            vh.settingSliderValues.setWeightSum(6);
-
-            LinearLayout.LayoutParams leftParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            leftParams.weight = 1;
-            leftParams.gravity = Gravity.LEFT;
-
-            LinearLayout.LayoutParams centerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            centerParams.weight = 1;
-            centerParams.gravity = Gravity.CENTER;
-
-            LinearLayout.LayoutParams rightParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            rightParams.weight = 1;
-            rightParams.gravity = Gravity.RIGHT;
-
             if (sliderSetting.getValueNumber() == 0) {
                 vh.settingSliderValues.setVisibility(View.GONE);
             } else {
 
-                vh.settingSliderValues.removeAllViews();
+                ViewTreeObserver observer = vh.settingSlider.getViewTreeObserver();
 
-                int delta = sliderSetting.getMaxValue() / sliderSetting.getValueNumber();
+                observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
-                for (int i = 0; i <= sliderSetting.getValueNumber(); i++) {
-                    TextView value = new TextView(vh.settingSliderValues.getContext());
+                    @Override
+                    public void onGlobalLayout() {
+                        vh.settingSlider.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        // Do what you need with yourView here...
 
-                    if (i == 0) {
-                        value.setText("" + sliderSetting.getMinValue());
-                        value.setLayoutParams(leftParams);
-                    } else if (i == sliderSetting.getValueNumber()) {
-                        value.setText("" + sliderSetting.getMaxValue());
-                        value.setLayoutParams(rightParams);
-                    } else {
-                        value.setText("" + (delta * i));
-                        value.setLayoutParams(centerParams);
+                        vh.settingSliderValues.removeAllViews();
+
+                        int delta = (sliderSetting.getMaxValue() - sliderSetting.getMinValue()) / (sliderSetting.getValueNumber() - 1);
+
+                        for (int i = 0; i < sliderSetting.getValueNumber(); i++) {
+                            TextView value = new TextView(vh.settingSliderValues.getContext());
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                            if (i == 0) {
+                                value.setText("" + sliderSetting.getMinValue());
+                                params.weight = 1;
+                                value.setGravity(Gravity.LEFT);
+                            } else if (i == sliderSetting.getValueNumber() - 1) {
+                                value.setText("" + sliderSetting.getMaxValue());
+                                params.weight = 1;
+                                value.setGravity(Gravity.RIGHT);
+                            } else {
+                                value.setText("" + (sliderSetting.getMinValue() + (delta * i)));
+                                params.weight = 2;
+                                value.setGravity(Gravity.CENTER);
+                            }
+
+                            value.setLayoutParams(params);
+
+                            vh.settingSliderValues.addView(value);
+                        }
                     }
+                });
 
-                    vh.settingSliderValues.addView(value);
-                }
+                vh.settingSliderValues.setWeightSum(sliderSetting.getValueNumber() * 2 - 2);
             }
 
             vh.settingSlider.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {

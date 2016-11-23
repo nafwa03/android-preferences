@@ -66,6 +66,13 @@ public class SettingsActivity extends AppCompatActivity {
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.addItemDecoration(new DividerDecoration(this, DividerDecoration.VERTICAL_LIST));
+
+        /*for (Setting setting : builder.settings) {
+            File icon = new File(setting.getIcon());
+            if(icon.exists()){
+                icon.delete();
+            }
+        }*/
     }
 
     @Override
@@ -89,10 +96,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        for (Setting setting : builder.settings) {
-            new File(setting.getIcon()).delete();
-        }
-
         finish();
     }
 }

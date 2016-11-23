@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                 )
-                        .setMinValue(1)
-                        .setMaxValue(50)
-                        .setValueNumber(6)
+                        .setMinValue(20)
+                        .setMaxValue(70)
+                        .setValueNumber(5)
                         .setDefaultValue(12)
 
         );
