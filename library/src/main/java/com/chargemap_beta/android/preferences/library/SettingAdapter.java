@@ -96,7 +96,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
     }
 
     @Override
-    public void onBindViewHolder(final VH vh, int position) {
+    public void onBindViewHolder(final VH vh, final int position) {
 
         final Setting setting = settings.get(position);
 
@@ -156,6 +156,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 @Override
                 public void onClick(int position) {
                     vh.settingCheckbox.setChecked(!vh.settingCheckbox.isChecked());
+                    if (setting.getUpdateListener() != null) {
+                        setting.getUpdateListener().onUpdate(position);
+                    }
                 }
             };
 
@@ -184,6 +187,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 @Override
                 public void onClick(int position) {
                     vh.switchButton.toggleImmediately();
+                    if (setting.getUpdateListener() != null) {
+                        setting.getUpdateListener().onUpdate(position);
+                    }
                 }
             };
 
@@ -265,6 +271,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 @Override
                 public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
                     setting.saveValue("" + seekBar.getProgress());
+                    if (setting.getUpdateListener() != null) {
+                        setting.getUpdateListener().onUpdate(position);
+                    }
                 }
             });
 
@@ -297,13 +306,15 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 vh.toggle.setSelectedToggle(Integer.parseInt(toggleSetting.findValue()));
             }
 
-            vh.toggle.items = new ArrayList<>();
+            vh.toggle.removeAllViews();
             vh.toggle.setItems(toggleSetting.getRadioSettingItemList());
 
             vh.toggle.setListener(new MultiToggleClickListener() {
                 @Override
                 public void onClick(int i) {
-                    setting.saveValue("" + i);
+                    if (setting.getUpdateListener() != null) {
+                        setting.getUpdateListener().onUpdate(position);
+                    }
                 }
             });
 
@@ -353,6 +364,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 @Override
                 public void onCheckedChanged(RadioGroup radioGroup, int i) {
                     setting.saveValue("" + i);
+                    if (setting.getUpdateListener() != null) {
+                        setting.getUpdateListener().onUpdate(position);
+                    }
                 }
             });
         }

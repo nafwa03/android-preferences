@@ -1,6 +1,6 @@
-# Android-BottomBar
+# Android-Preferences
 
-Android-BottomBar is a simple library developed to provide a nice bottom bar following Google material design guidelines.
+Android-Preferences is a simple library developed to provide a easy way to implement your application preferences.
 
 [![Release](https://jitpack.io/v/ChargeMap/android-preferences.svg)](https://jitpack.io/v/ChargeMap/android-preferences.svg)
 

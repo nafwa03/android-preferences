@@ -9,6 +9,9 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.chargemap_beta.android.preferences.library.callbacks.SettingClickListener;
+import com.chargemap_beta.android.preferences.library.callbacks.SettingUpdateListener;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,8 +36,9 @@ public abstract class Setting implements Serializable {
 
     private String subtitle;
 
+    private SettingUpdateListener clickListener;
+
     private transient Context context;
-    private String key;
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap;
@@ -188,7 +192,7 @@ public abstract class Setting implements Serializable {
             return UNIQUE_KEY + getLabel();
         }
 
-        return key;
+        return null;
     }
 
     public String getUUID() {
@@ -197,5 +201,14 @@ public abstract class Setting implements Serializable {
 
     public void setUUID(String UUID) {
         this.UUID = UUID;
+    }
+
+    public SettingUpdateListener getUpdateListener() {
+        return clickListener;
+    }
+
+    public Setting setUpdateListener(SettingUpdateListener clickListener) {
+        this.clickListener = clickListener;
+        return this;
     }
 }

@@ -6,8 +6,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.chargemap_beta.android.preferences.library.SettingsBuilder;
+import com.chargemap_beta.android.preferences.library.callbacks.SettingUpdateListener;
 import com.chargemap_beta.android.preferences.library.types.CheckBoxSetting;
 import com.chargemap_beta.android.preferences.library.types.RadioSetting;
 import com.chargemap_beta.android.preferences.library.types.Setting;
@@ -50,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 )
                         .setRadioSettingItemList(stringList)
                         .setDefaultRadioPosition(0)
-
         );
 
         settings.add(((SliderSetting) new SliderSetting()
@@ -59,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
                         .setTitle("Title2")
                         .setSubtitle("Subtitle")
                         .setIcon("http://www.myiconfinder.com/uploads/iconsets/79a6cc671eb7205ea4903436e08851c4-map.png")
+                        .setUpdateListener(new SettingUpdateListener() {
+                            @Override
+                            public void onUpdate(int position) {
+                                Toast.makeText(MainActivity.this, "Update value for item -> " + position, Toast.LENGTH_SHORT).show();
+                            }
+                        })
                 )
                         .setMinValue(1)
                         .setMaxValue(50)
