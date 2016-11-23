@@ -114,17 +114,19 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             }
         }
 
-        if (vh.title != null && vh.title.getText().length() == 0) {
-            vh.title.setText(setting.getLabel());
+        if (vh.title != null) {
             if (setting.getLabel() == null) {
                 vh.title.setVisibility(View.GONE);
+            } else {
+                vh.title.setText(setting.getLabel());
             }
         }
 
         if (vh.settingTitle != null) {
-            vh.settingTitle.setText(setting.getTitle());
             if (setting.getTitle() == null) {
                 vh.settingTitle.setVisibility(View.GONE);
+            } else {
+                vh.settingTitle.setText(setting.getTitle());
             }
         }
         if (vh.subtitle != null) {

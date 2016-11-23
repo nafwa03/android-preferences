@@ -199,8 +199,9 @@ public abstract class Setting implements Serializable {
         return UUID;
     }
 
-    public void setUUID(String UUID) {
+    public Setting setUUID(String UUID) {
         this.UUID = UUID;
+        return this;
     }
 
     public SettingUpdateListener getUpdateListener() {
