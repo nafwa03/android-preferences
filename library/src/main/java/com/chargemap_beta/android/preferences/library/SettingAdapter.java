@@ -116,7 +116,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         if (vh.label != null) {
             if (setting.getLabel() == null) {
-                vh.label.setVisibility(View.GONE);
+                //vh.label.setVisibility(View.GONE);
+                vh.label.setText("nulllll");
             } else {
                 vh.label.setText(setting.getLabel());
             }
@@ -421,7 +422,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             switchButton = (SwitchButton) v.findViewById(R.id.switchButton);
             toggle = (MultiToggle) v.findViewById(R.id.toggle);
             settingSliderValues = (LinearLayout) v.findViewById(R.id.adapterSettingSliderItem_linearLayout_values);
-            title = (TextView) v.findViewById(R.id.adapterSettingItem_textView_label);
+            title = (TextView) v.findViewById(R.id.adapterSettingItem_textView_title);
             radioRow = (LinearLayout) v.findViewById(R.id.adapterSettingRadioItem_linearLayout_labelContainer);
 
             v.setOnClickListener(this);

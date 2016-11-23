@@ -22,7 +22,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/adapterSettingItem_textView_label">
+            android:layout_below="@+id/label">
 
             <com.chargemap_beta.android.pictureLoader.library.PictureView
                 android:id="@+id/adapterSettingItem_imageView_icon"
