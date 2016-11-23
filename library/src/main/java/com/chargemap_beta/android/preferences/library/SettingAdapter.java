@@ -159,7 +159,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 public void onClick(int position) {
                     vh.settingCheckbox.setChecked(!vh.settingCheckbox.isChecked());
                     if (setting.getUpdateListener() != null) {
-                        setting.getUpdateListener().onUpdate(position);
+                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
                     }
                 }
             };
@@ -190,7 +190,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 public void onClick(int position) {
                     vh.switchButton.toggleImmediately();
                     if (setting.getUpdateListener() != null) {
-                        setting.getUpdateListener().onUpdate(position);
+                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
                     }
                 }
             };
@@ -274,7 +274,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
                     setting.saveValue("" + seekBar.getProgress());
                     if (setting.getUpdateListener() != null) {
-                        setting.getUpdateListener().onUpdate(position);
+                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
                     }
                 }
             });
@@ -315,7 +315,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 @Override
                 public void onClick(int i) {
                     if (setting.getUpdateListener() != null) {
-                        setting.getUpdateListener().onUpdate(position);
+                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
                     }
                 }
             });
@@ -367,7 +367,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 public void onCheckedChanged(RadioGroup radioGroup, int i) {
                     setting.saveValue("" + i);
                     if (setting.getUpdateListener() != null) {
-                        setting.getUpdateListener().onUpdate(position);
+                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
                     }
                 }
             });

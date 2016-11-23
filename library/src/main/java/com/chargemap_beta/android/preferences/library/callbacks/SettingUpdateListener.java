@@ -1,5 +1,7 @@
 package com.chargemap_beta.android.preferences.library.callbacks;
 
+import com.chargemap_beta.android.preferences.library.types.Setting;
+
 import java.io.Serializable;
 
 /**
@@ -7,5 +9,5 @@ import java.io.Serializable;
  */
 
 public abstract class SettingUpdateListener implements Serializable {
-    public abstract void onUpdate(int position);
+    public abstract void onUpdate(Setting setting, String value, int position);
 }

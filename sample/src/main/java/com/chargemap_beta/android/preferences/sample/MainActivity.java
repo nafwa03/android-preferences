@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         .setIcon("http://www.myiconfinder.com/uploads/iconsets/79a6cc671eb7205ea4903436e08851c4-map.png")
                         .setUpdateListener(new SettingUpdateListener() {
                             @Override
-                            public void onUpdate(int position) {
+                            public void onUpdate(Setting setting, String value, int position) {
                                 Toast.makeText(MainActivity.this, "Update value for item -> " + position, Toast.LENGTH_SHORT).show();
                             }
                         })
