@@ -105,6 +105,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         if (setting.getIcon() == null || setting.getIcon().equals("null")) {
             vh.icon.setVisibility(View.GONE);
         } else {
+            vh.icon.setVisibility(View.VISIBLE);
             if (setting.getIconIsSVG()) {
                 vh.icon.loadSVG(setting.getIcon());
             } else if (setting.getIconIsDrawable()) {
@@ -117,8 +118,8 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         if (vh.label != null) {
             if (setting.getLabel() == null) {
                 vh.label.setVisibility(View.GONE);
-                //vh.label.setText("nulllll");
             } else {
+                vh.label.setVisibility(View.VISIBLE);
                 vh.label.setText(setting.getLabel());
             }
         }
@@ -127,6 +128,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             if (setting.getTitle() == null) {
                 vh.title.setVisibility(View.GONE);
             } else {
+                vh.title.setVisibility(View.VISIBLE);
                 vh.title.setText(setting.getTitle());
             }
         }
@@ -135,6 +137,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             if (setting.getSubtitle() == null) {
                 vh.subtitle.setVisibility(View.GONE);
             } else {
+                vh.subtitle.setVisibility(View.VISIBLE);
                 vh.subtitle.setText(setting.getSubtitle());
             }
         }
