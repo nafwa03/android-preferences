@@ -114,21 +114,22 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             }
         }
 
-        if (vh.title != null) {
+        if (vh.label != null) {
             if (setting.getLabel() == null) {
-                vh.title.setVisibility(View.GONE);
+                vh.label.setVisibility(View.GONE);
             } else {
-                vh.title.setText(setting.getLabel());
+                vh.label.setText(setting.getLabel());
             }
         }
 
-        if (vh.settingTitle != null) {
+        if (vh.title != null) {
             if (setting.getTitle() == null) {
-                vh.settingTitle.setVisibility(View.GONE);
+                vh.title.setVisibility(View.GONE);
             } else {
-                vh.settingTitle.setText(setting.getTitle());
+                vh.title.setText(setting.getTitle());
             }
         }
+
         if (vh.subtitle != null) {
             if (setting.getSubtitle() == null) {
                 vh.subtitle.setVisibility(View.GONE);
@@ -137,10 +138,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             }
         }
 
-        if (settings.get(position) instanceof TextSetting) {
-
-
-        } else if (settings.get(position) instanceof CheckBoxSetting) {
+        if (settings.get(position) instanceof CheckBoxSetting) {
 
             final CheckBoxSetting checkBoxSetting = (CheckBoxSetting) setting;
 
@@ -208,6 +206,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
             if (sliderSetting.findValue() == null || sliderSetting.findValue().equals("null")) {
                 // No preference found
+                vh.settingSlider.setProgress(sliderSetting.getDefaultValue());
                 vh.settingSlider.setProgress(sliderSetting.getDefaultValue());
 
             } else {
@@ -314,8 +313,13 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             vh.toggle.setListener(new MultiToggleClickListener() {
                 @Override
                 public void onClick(int i) {
+                    setting.saveValue("" + i);
                     if (setting.getUpdateListener() != null) {
-                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
+                        if (setting.findValue().equals("null")) {
+                            setting.getUpdateListener().onUpdate(setting, "" + i, position);
+                        } else {
+                            setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
+                        }
                     }
                 }
             });
@@ -389,7 +393,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         RadioGroup radioGroup;
 
-        TextView settingTitle;
+        TextView label;
 
         DiscreteSeekBar settingSlider;
 
@@ -412,7 +416,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             subtitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_subtitle);
             settingCheckbox = (CheckBox) v.findViewById(R.id.adapterSettingCheckboxItem_checkBox);
             radioGroup = (RadioGroup) v.findViewById(R.id.adapterSettingRadioItem_radioGroup);
-            settingTitle = (TextView) v.findViewById(R.id.adapterSettingItem_textView_title);
+            label = (TextView) v.findViewById(R.id.label);
             settingSlider = (DiscreteSeekBar) v.findViewById(R.id.adapterSettingSliderItem_rangeBar_slider);
             switchButton = (SwitchButton) v.findViewById(R.id.switchButton);
             toggle = (MultiToggle) v.findViewById(R.id.toggle);
