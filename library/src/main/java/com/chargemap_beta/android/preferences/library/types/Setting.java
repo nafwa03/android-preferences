@@ -177,7 +177,7 @@ public abstract class Setting implements Serializable {
     public String getKey() {
 
         if (getUUID() != null && getUUID().length() > 0) {
-            return UNIQUE_KEY + getUUID();
+            return getUUID();
         }
 
         if (getTitle() != null && getTitle().length() > 0) {
