@@ -28,7 +28,7 @@ public class LibraryPreferenceActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_library_preference_settings);
 
         builder = (SettingsBuilder) getIntent().getSerializableExtra("data");
 
