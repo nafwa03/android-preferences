@@ -58,7 +58,7 @@ public class SettingsBuilder implements Serializable {
 
     public void start() {
 
-        Intent intent = new Intent(activity, SettingsActivity.class);
+        Intent intent = new Intent(activity, LibraryPreferenceActivity.class);
 
         intent.putExtra("data", this);
 

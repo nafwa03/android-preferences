@@ -16,7 +16,7 @@ import com.chargemap_beta.android.preferences.library.types.Setting;
 
 import java.io.File;
 
-public class SettingsActivity extends AppCompatActivity {
+public class LibraryPreferenceActivity extends AppCompatActivity {
 
     RecyclerView recyclerview;
 
@@ -61,8 +61,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         settingAdapter = new SettingAdapter(this, builder.primaryColor, builder.accentColor);
         settingAdapter.setItems(builder.settings);
-        recyclerview.setAdapter(settingAdapter);
 
+        recyclerview.setAdapter(settingAdapter);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.addItemDecoration(new DividerDecoration(this, DividerDecoration.VERTICAL_LIST));
@@ -96,6 +96,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        for (Setting setting : builder.settings) {
+            new File(setting.getIcon()).delete();
+        }
+
         finish();
     }
 }

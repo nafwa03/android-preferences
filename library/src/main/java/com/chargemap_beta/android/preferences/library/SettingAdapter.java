@@ -97,9 +97,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
     }
 
     @Override
-    public void onBindViewHolder(final VH vh, final int position) {
+    public void onBindViewHolder(final VH vh, final int ignored) {
 
-        final Setting setting = settings.get(position);
+        final Setting setting = settings.get(vh.getLayoutPosition());
 
         setting.setContext(baseActivity);
 
@@ -143,7 +143,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             }
         }
 
-        if (settings.get(position) instanceof CheckBoxSetting) {
+        if (settings.get(vh.getLayoutPosition()) instanceof CheckBoxSetting) {
 
             final CheckBoxSetting checkBoxSetting = (CheckBoxSetting) setting;
 
@@ -174,7 +174,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 }
             });
 
-        } else if (settings.get(position) instanceof SwitchSetting) {
+        } else if (settings.get(vh.getLayoutPosition()) instanceof SwitchSetting) {
 
             final SwitchSetting switchSetting = (SwitchSetting) setting;
 
@@ -205,7 +205,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 }
             });
 
-        } else if (settings.get(position) instanceof SliderSetting) {
+        } else if (settings.get(vh.getLayoutPosition()) instanceof SliderSetting) {
 
             final SliderSetting sliderSetting = (SliderSetting) setting;
 
@@ -282,12 +282,12 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
                     setting.saveValue("" + seekBar.getProgress());
                     if (setting.getUpdateListener() != null) {
-                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
+                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), vh.getLayoutPosition());
                     }
                 }
             });
 
-        } else if (settings.get(position) instanceof ToggleSetting) {
+        } else if (settings.get(vh.getLayoutPosition()) instanceof ToggleSetting) {
 
             ToggleSetting toggleSetting = (ToggleSetting) setting;
 
@@ -325,15 +325,15 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                     setting.saveValue("" + i);
                     if (setting.getUpdateListener() != null) {
                         if (setting.findValue().equals("null")) {
-                            setting.getUpdateListener().onUpdate(setting, "" + i, position);
+                            setting.getUpdateListener().onUpdate(setting, "" + i, vh.getLayoutPosition());
                         } else {
-                            setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
+                            setting.getUpdateListener().onUpdate(setting, setting.findValue(), vh.getLayoutPosition());
                         }
                     }
                 }
             });
 
-        } else if (settings.get(position) instanceof RadioSetting) {
+        } else if (settings.get(vh.getLayoutPosition()) instanceof RadioSetting) {
 
             RadioSetting radioSetting = (RadioSetting) setting;
 
@@ -380,7 +380,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 public void onCheckedChanged(RadioGroup radioGroup, int i) {
                     setting.saveValue("" + i);
                     if (setting.getUpdateListener() != null) {
-                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
+                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), vh.getLayoutPosition());
                     }
                 }
             });
