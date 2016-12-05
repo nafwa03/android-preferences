@@ -161,9 +161,6 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 @Override
                 public void onClick(int position) {
                     vh.settingCheckbox.setChecked(!vh.settingCheckbox.isChecked());
-                    if (setting.getUpdateListener() != null) {
-                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), position);
-                    }
                 }
             };
 
@@ -171,6 +168,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     setting.saveValue(b ? "true" : "false");
+                    if (setting.getUpdateListener() != null) {
+                        setting.getUpdateListener().onUpdate(setting, setting.findValue(), vh.getLayoutPosition());
+                    }
                 }
             });
 
