@@ -9,14 +9,12 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.chargemap_beta.android.preferences.library.callbacks.SettingClickListener;
 import com.chargemap_beta.android.preferences.library.callbacks.SettingUpdateListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 public abstract class Setting implements Serializable {
 
@@ -35,6 +33,8 @@ public abstract class Setting implements Serializable {
     private String title;
 
     private String subtitle;
+
+    private transient Drawable iconDrawable;
 
     private transient SettingUpdateListener clickListener;
 
@@ -90,9 +90,6 @@ public abstract class Setting implements Serializable {
     }
 
     public void saveValue(String value) {
-        if(this instanceof ToggleSetting){
-            Log.e("PREFERENCES", "Save -> " + value);
-        }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(getKey(), value);
@@ -102,37 +99,38 @@ public abstract class Setting implements Serializable {
     public String findValue() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String value = preferences.getString(getKey(), "null");
-        if(this instanceof ToggleSetting) {
-            Log.e("PREFERENCES", "Find -> " + value);
-        }
         return value;
     }
 
-    public Setting setIconDrawable(Drawable iconDrawable) {
+    public Setting setIconDrawable(Drawable drawable) {
         iconIsDrawable = true;
+        iconDrawable = drawable;
+        return this;
+    }
 
-        setIcon(context.getCacheDir() + File.separator + UNIQUE_KEY + getTitle());
+    public void writeIcon() {
+        if (iconIsDrawable) {
+            setIcon(context.getCacheDir() + File.separator + UNIQUE_KEY + getTitle());
 
-        Bitmap bitmap = drawableToBitmap(iconDrawable);
+            Bitmap bitmap = drawableToBitmap(iconDrawable);
 
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(icon);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
-            // PNG is a lossless format, the compression factor (100) is ignored
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+            FileOutputStream out = null;
             try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
+                out = new FileOutputStream(icon);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+                // PNG is a lossless format, the compression factor (100) is ignored
+            } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
-        return this;
     }
 
     public String getIcon() {

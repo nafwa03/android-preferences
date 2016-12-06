@@ -57,6 +57,9 @@ public class SettingsBuilder implements Serializable {
     }
 
     public void start() {
+        for (Setting setting : settings) {
+            setting.writeIcon();
+        }
 
         Intent intent = new Intent(activity, LibraryPreferenceActivity.class);
 
