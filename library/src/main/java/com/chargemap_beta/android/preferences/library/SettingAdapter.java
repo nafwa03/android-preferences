@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,14 +104,17 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         setting.setContext(baseActivity);
 
-        if (setting.getIcon() == null || setting.getIcon().equals("null")) {
+        if (setting.getIconDrawable() == null && (setting.getIcon() == null || setting.getIcon().equals("null"))) {
             vh.icon.setVisibility(View.GONE);
         } else {
             vh.icon.setVisibility(View.VISIBLE);
             if (setting.getIconIsSVG()) {
                 vh.icon.loadSVG(setting.getIcon());
             } else if (setting.getIconIsDrawable()) {
+                Log.d("SETTINGS", "DRAWABLE");
+
                 if (setting.getIconDrawable() != null) {
+                    Log.d("SETTINGS", "DRAWABLE2");
                     vh.icon.load(setting.getIconDrawable());
                 } else {
                     vh.icon.load(new File(setting.getIcon()));

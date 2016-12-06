@@ -98,8 +98,7 @@ public abstract class Setting implements Serializable {
 
     public String findValue() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String value = preferences.getString(getKey(), "null");
-        return value;
+        return preferences.getString(getKey(), "null");
     }
 
     public Setting setIconDrawable(Drawable drawable) {
