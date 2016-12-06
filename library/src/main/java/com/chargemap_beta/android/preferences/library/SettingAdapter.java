@@ -110,7 +110,11 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             if (setting.getIconIsSVG()) {
                 vh.icon.loadSVG(setting.getIcon());
             } else if (setting.getIconIsDrawable()) {
-                vh.icon.load(new File(setting.getIcon()));
+                if (setting.getIconDrawable() != null) {
+                    vh.icon.load(setting.getIconDrawable());
+                } else {
+                    vh.icon.load(new File(setting.getIcon()));
+                }
             } else {
                 vh.icon.load(setting.getIcon());
             }

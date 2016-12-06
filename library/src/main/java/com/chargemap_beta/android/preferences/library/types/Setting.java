@@ -108,6 +108,10 @@ public abstract class Setting implements Serializable {
         return this;
     }
 
+    public Drawable getIconDrawable() {
+        return iconDrawable;
+    }
+
     public void writeIcon() {
         if (iconIsDrawable) {
             setIcon(context.getCacheDir() + File.separator + UNIQUE_KEY + getTitle());
