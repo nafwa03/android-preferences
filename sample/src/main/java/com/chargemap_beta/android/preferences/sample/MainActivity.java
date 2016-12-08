@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         .setDefaultRadioPosition(0)
                         .setActiveBackgroundColor(R.color.md_blue_800)
                         .setRadius(120)
+                        .setBorderWidth(1)
         );
 
         settingsBuilder = new SettingsBuilder()

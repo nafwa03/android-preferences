@@ -24,6 +24,8 @@ public class SettingsBuilder implements Serializable {
 
     public int toolbarTextColor;
 
+    public int dividerColor;
+
     private transient Activity activity;
 
     public SettingsBuilder setPrimaryColor(int color) {
@@ -38,6 +40,11 @@ public class SettingsBuilder implements Serializable {
 
     public SettingsBuilder setToolbarTextColor(int textColor) {
         this.toolbarTextColor = ContextCompat.getColor(activity, textColor);
+        return this;
+    }
+
+    public SettingsBuilder setDividerColor(int dividerColor) {
+        this.dividerColor = ContextCompat.getColor(activity, dividerColor);
         return this;
     }
 
@@ -76,7 +83,7 @@ public class SettingsBuilder implements Serializable {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.addItemDecoration(new DividerDecoration(activity, DividerDecoration.VERTICAL_LIST));
+        recyclerView.addItemDecoration(new VerticalDivider(activity, ContextCompat.getColor(activity, dividerColor)));
 
         return settingAdapter;
     }

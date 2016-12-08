@@ -308,10 +308,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             if (toggleSetting.getInactiveTextColor() != 0)
                 vh.toggle.setInactiveTextColor(toggleSetting.getInactiveTextColor());
 
-            if (toggleSetting.getPadding() != 0) vh.toggle.setPadding(toggleSetting.getPadding());
-            if (toggleSetting.getRadius() != 0) vh.toggle.setRadius(toggleSetting.getRadius());
-            if (toggleSetting.getBorderWidth() != 0)
-                vh.toggle.setBorderWidth(toggleSetting.getBorderWidth());
+            vh.toggle.setPadding(toggleSetting.getPadding());
+            vh.toggle.setRadius(toggleSetting.getRadius());
+            vh.toggle.setBorderWidth(toggleSetting.getBorderWidth());
 
             if (toggleSetting.getBorderColor() != 0)
                 vh.toggle.setBorderColor(toggleSetting.getBorderColor());
