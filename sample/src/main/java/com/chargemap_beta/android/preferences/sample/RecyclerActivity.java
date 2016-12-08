@@ -74,6 +74,7 @@ public class RecyclerActivity extends AppCompatActivity {
                 .fromActivity(RecyclerActivity.this)
                 .setSettings(settings)
                 .setAccentColor(R.color.colorAccent)
+                .setDividerColor(R.color.md_red_500)
                 .setupRecyclerView((RecyclerView) findViewById(R.id.recyclerview));
 
         findViewById(R.id.refreshButton).setOnClickListener(new View.OnClickListener() {

@@ -65,14 +65,7 @@ public class LibraryPreferenceActivity extends AppCompatActivity {
         recyclerview.setAdapter(settingAdapter);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        recyclerview.addItemDecoration(new DividerDecoration(this, DividerDecoration.VERTICAL_LIST));
-
-        /*for (Setting setting : builder.settings) {
-            File icon = new File(setting.getIcon());
-            if(icon.exists()){
-                icon.delete();
-            }
-        }*/
+        recyclerview.addItemDecoration(new VerticalDivider(this, builder.dividerColor));
     }
 
     @Override
