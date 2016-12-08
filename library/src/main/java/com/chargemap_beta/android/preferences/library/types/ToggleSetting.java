@@ -9,6 +9,7 @@ public class ToggleSetting extends Setting {
 
     private int radius;
     private int padding;
+    private int borderWidth;
 
     private int activeBackgroundColor;
     private int inactiveBackgroundColor;
@@ -107,6 +108,15 @@ public class ToggleSetting extends Setting {
 
     public ToggleSetting setBorderColor(int borderColor) {
         this.borderColor = borderColor;
+        return this;
+    }
+
+    public int getBorderWidth() {
+        return borderWidth;
+    }
+
+    public ToggleSetting setBorderWidth(int borderWidth) {
+        this.borderWidth = borderWidth;
         return this;
     }
 }
