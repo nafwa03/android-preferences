@@ -18,6 +18,8 @@ public class SettingsBuilder implements Serializable {
 
     public String title;
 
+    public int lineSpacing;
+
     public int primaryColor;
 
     public int accentColor;
@@ -45,6 +47,11 @@ public class SettingsBuilder implements Serializable {
 
     public SettingsBuilder setDividerColor(int dividerColor) {
         this.dividerColor = ContextCompat.getColor(activity, dividerColor);
+        return this;
+    }
+
+    public SettingsBuilder setLineSpacing(int lineSpacing) {
+        this.lineSpacing = lineSpacing;
         return this;
     }
 

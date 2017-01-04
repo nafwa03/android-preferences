@@ -40,15 +40,17 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
     private Activity baseActivity;
     private List<Setting> settings = new ArrayList<>();
-    int primaryColor;
 
-    int accentColor;
+    private int primaryColor;
+    private int accentColor;
+    private int lineSpacing;
 
-    public SettingAdapter(Activity baseActivity, int primaryColor, int accentColor) {
+    public SettingAdapter(Activity baseActivity, int primaryColor, int accentColor, int lineSpacing) {
         this.baseActivity = baseActivity;
         this.primaryColor = primaryColor;
         this.accentColor = accentColor;
         this.settings = new ArrayList<>();
+        this.lineSpacing = lineSpacing;
     }
 
     @Override
@@ -130,6 +132,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             } else {
                 vh.label.setVisibility(View.VISIBLE);
                 vh.label.setText(setting.getLabel());
+                vh.label.setLineSpacing(0, lineSpacing);
             }
         }
 
@@ -139,6 +142,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             } else {
                 vh.title.setVisibility(View.VISIBLE);
                 vh.title.setText(setting.getTitle());
+                vh.title.setLineSpacing(0, lineSpacing);
             }
         }
 
@@ -148,6 +152,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             } else {
                 vh.subtitle.setVisibility(View.VISIBLE);
                 vh.subtitle.setText(setting.getSubtitle());
+                vh.subtitle.setLineSpacing(0, lineSpacing);
             }
         }
 
