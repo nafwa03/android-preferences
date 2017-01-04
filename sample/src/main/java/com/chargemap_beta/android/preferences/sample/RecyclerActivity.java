@@ -52,7 +52,7 @@ public class RecyclerActivity extends AppCompatActivity {
                         .setContext(this)
                         .setLabel("Section 2")
                         .setTitle("Title")
-                        .setSubtitle("Subtitle")
+                        .setSubtitle("SubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitleSubtitle")
                         .setIcon("http://www.myiconfinder.com/uploads/iconsets/79a6cc671eb7205ea4903436e08851c4-map.png")
                 )
                         .setMinValue(3)
@@ -74,6 +74,7 @@ public class RecyclerActivity extends AppCompatActivity {
                 .fromActivity(RecyclerActivity.this)
                 .setSettings(settings)
                 .setAccentColor(R.color.colorAccent)
+                .setLineSpacing((float) 1.25)
                 .setDividerColor(R.color.md_red_500)
                 .setupRecyclerView((RecyclerView) findViewById(R.id.recyclerview));
 

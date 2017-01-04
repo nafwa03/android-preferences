@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,12 +44,15 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
     private int accentColor;
     private float lineSpacing;
 
-    public SettingAdapter(Activity baseActivity, int primaryColor, int accentColor, float lineSpacing) {
+    SettingAdapter(Activity baseActivity, int primaryColor, int accentColor, float lineSpacing) {
         this.baseActivity = baseActivity;
         this.primaryColor = primaryColor;
         this.accentColor = accentColor;
         this.settings = new ArrayList<>();
         this.lineSpacing = lineSpacing;
+        if (lineSpacing == 0) {
+            this.lineSpacing = 1;
+        }
     }
 
     @Override
@@ -113,10 +115,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             if (setting.getIconIsSVG()) {
                 vh.icon.loadSVG(setting.getIcon());
             } else if (setting.getIconIsDrawable()) {
-                Log.d("SETTINGS", "DRAWABLE");
-
                 if (setting.getIconDrawable() != null) {
-                    Log.d("SETTINGS", "DRAWABLE2");
                     vh.icon.load(setting.getIconDrawable());
                 } else {
                     vh.icon.load(new File(setting.getIcon()));
@@ -132,7 +131,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             } else {
                 vh.label.setVisibility(View.VISIBLE);
                 vh.label.setText(setting.getLabel());
-                vh.label.setLineSpacing(0, lineSpacing);
+                vh.label.setLineSpacing(vh.label.getLineSpacingExtra(), lineSpacing);
             }
         }
 
@@ -142,7 +141,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             } else {
                 vh.title.setVisibility(View.VISIBLE);
                 vh.title.setText(setting.getTitle());
-                vh.title.setLineSpacing(0, lineSpacing);
+                vh.title.setLineSpacing(vh.title.getLineSpacingExtra(), lineSpacing);
             }
         }
 
@@ -152,7 +151,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
             } else {
                 vh.subtitle.setVisibility(View.VISIBLE);
                 vh.subtitle.setText(setting.getSubtitle());
-                vh.subtitle.setLineSpacing(0, lineSpacing);
+                vh.subtitle.setLineSpacing(vh.subtitle.getLineSpacingExtra(), lineSpacing);
             }
         }
 
@@ -257,15 +256,15 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
                             if (i == 0) {
-                                value.setText("" + sliderSetting.getMinValue());
+                                value.setText(String.valueOf(sliderSetting.getMinValue()));
                                 params.weight = 1;
                                 value.setGravity(Gravity.LEFT);
                             } else if (i == sliderSetting.getValueNumber() - 1) {
-                                value.setText("" + sliderSetting.getMaxValue());
+                                value.setText(String.valueOf(sliderSetting.getMaxValue()));
                                 params.weight = 1;
                                 value.setGravity(Gravity.RIGHT);
                             } else {
-                                value.setText("" + (sliderSetting.getMinValue() + (delta * i)));
+                                value.setText(String.valueOf(sliderSetting.getMinValue() + (delta * i)));
                                 params.weight = 2;
                                 value.setGravity(Gravity.CENTER);
                             }
@@ -387,12 +386,12 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
                 vh.radioRow.addView(textView);
             }
 
-            radioSetting.saveValue("" + checkedRadioId);
+            radioSetting.saveValue(String.valueOf(checkedRadioId));
 
             vh.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                    setting.saveValue("" + i);
+                    setting.saveValue(String.valueOf(i));
                     if (setting.getUpdateListener() != null) {
                         setting.getUpdateListener().onUpdate(setting, setting.findValue(), vh.getLayoutPosition());
                     }
@@ -406,7 +405,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
         return settings == null ? 0 : settings.size();
     }
 
-    public static class VH extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class VH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         PictureView icon;
 
@@ -432,7 +431,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
         SettingClickListener settingClickListener;
 
-        public VH(View v) {
+        VH(View v) {
             super(v);
 
             icon = (PictureView) v.findViewById(R.id.adapterSettingItem_imageView_icon);
