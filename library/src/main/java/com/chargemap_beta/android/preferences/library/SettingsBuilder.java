@@ -83,7 +83,7 @@ public class SettingsBuilder implements Serializable {
     }
 
     public SettingAdapter setupRecyclerView(RecyclerView recyclerView) {
-        SettingAdapter settingAdapter = new SettingAdapter(activity, primaryColor, accentColor);
+        SettingAdapter settingAdapter = new SettingAdapter(activity, primaryColor, accentColor, 0);
         settingAdapter.setItems(settings);
 
         recyclerView.setAdapter(settingAdapter);

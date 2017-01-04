@@ -43,9 +43,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.VH> {
 
     private int primaryColor;
     private int accentColor;
-    private int lineSpacing;
+    private float lineSpacing;
 
-    public SettingAdapter(Activity baseActivity, int primaryColor, int accentColor, int lineSpacing) {
+    public SettingAdapter(Activity baseActivity, int primaryColor, int accentColor, float lineSpacing) {
         this.baseActivity = baseActivity;
         this.primaryColor = primaryColor;
         this.accentColor = accentColor;

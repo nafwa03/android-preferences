@@ -59,7 +59,7 @@ public class LibraryPreferenceActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
 
-        settingAdapter = new SettingAdapter(this, builder.primaryColor, builder.accentColor);
+        settingAdapter = new SettingAdapter(this, builder.primaryColor, builder.accentColor, 0);
         settingAdapter.setItems(builder.settings);
 
         recyclerview.setAdapter(settingAdapter);
