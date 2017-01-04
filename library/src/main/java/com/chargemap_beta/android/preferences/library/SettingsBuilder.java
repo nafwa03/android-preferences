@@ -18,7 +18,7 @@ public class SettingsBuilder implements Serializable {
 
     public String title;
 
-    public int lineSpacing;
+    public float lineSpacing;
 
     public int primaryColor;
 
@@ -50,7 +50,7 @@ public class SettingsBuilder implements Serializable {
         return this;
     }
 
-    public SettingsBuilder setLineSpacing(int lineSpacing) {
+    public SettingsBuilder setLineSpacing(float lineSpacing) {
         this.lineSpacing = lineSpacing;
         return this;
     }
